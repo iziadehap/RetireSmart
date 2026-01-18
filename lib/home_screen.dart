@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get_x/get_core/src/get_main.dart';
-import 'package:get_x/get_navigation/src/extension_navigation.dart';
-import 'GoldPrice/gold_screen.dart';
+import 'package:get_x/get.dart';
+import 'package:retiresmart/GoldPrice/gold_screen.dart';
+import 'RetireSmart/presentation/screens/retirement_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                // Get.to(() => const GoldScreen());
+                Get.to(() => const RetirementScreen());
               },
               child: Container(
                 color: Colors.green,
