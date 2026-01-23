@@ -2,17 +2,34 @@ import 'dart:math';
 import '../../domain/models/retirement_model.dart';
 
 class RetirementCalculator {
-  static const int retirementAge = 60;
-  static const double annualInflationRate = 0.10; // 10%
-  static const double annualInvestmentReturn = 0.12; // 12%
+  static const double annualInflationRate = 0.105; // 10.5%
   static const double safeWithdrawalRate = 0.04; // 4%
 
   static RetirementResult calculate(RetirementInput input) {
-    if (input.currentAge >= retirementAge) {
-      throw Exception("Age must be less than $retirementAge");
+    if (input.currentAge >= input.retirementAge) {
+      throw Exception("Current age must be less than retirement age");
     }
 
-    final int yearsToRetirement = retirementAge - input.currentAge;
+    final int yearsToRetirement = input.retirementAge - input.currentAge;
+
+    // Determine annual investment return based on risk
+    double annualInvestmentReturn;
+    Map<String, double> distribution;
+
+    switch (input.riskLevel) {
+      case RiskLevel.high:
+        annualInvestmentReturn = 0.15;
+        distribution = {'Stocks': 0.70, 'Gold': 0.20, 'Certificates': 0.10};
+        break;
+      case RiskLevel.medium:
+        annualInvestmentReturn = 0.12;
+        distribution = {'Stocks': 0.50, 'Gold': 0.30, 'Certificates': 0.20};
+        break;
+      case RiskLevel.low:
+        annualInvestmentReturn = 0.08;
+        distribution = {'Stocks': 0.20, 'Gold': 0.30, 'Certificates': 0.50};
+        break;
+    }
 
     // 1. Future Annual Expenses
     // Formula: PV * (1 + inflation)^years * 12 months
@@ -20,10 +37,10 @@ class RetirementCalculator {
         (input.monthlyExpenses * 12) *
         pow(1 + annualInflationRate, yearsToRetirement);
 
-    // 2. Required Nest Egg at 60
+    // 2. Required Nest Egg
     final double requiredNestEgg = futureAnnualExpenses / safeWithdrawalRate;
 
-    // 3. Monthly Savings Needed (Future Value of Annuity with initial lump sum)
+    // 3. Monthly Savings Needed (Future Value of Annuity)
 
     // Monthly return rate
     final double monthlyReturnRate = annualInvestmentReturn / 12;
@@ -47,15 +64,23 @@ class RetirementCalculator {
         1 + monthlyReturnRate,
         monthsToRetirement,
       ).toDouble();
+
       monthlySavingsNeeded =
           gapToFill * monthlyReturnRate / (compoundFactor - 1);
     }
+
+    // Calculate available savings
+    final double totalIncome =
+        input.mainMonthlyIncome + (input.additionalMonthlyIncome ?? 0);
+    final double availableSavings = totalIncome - input.monthlyExpenses;
 
     return RetirementResult(
       monthlySavingsNeeded: monthlySavingsNeeded > 0 ? monthlySavingsNeeded : 0,
       requiredNestEgg: requiredNestEgg,
       futureMonthlyExpenses: futureAnnualExpenses / 12,
       yearsToRetirement: yearsToRetirement,
+      availableSavings: availableSavings,
+      investmentDistribution: distribution,
     );
   }
 }

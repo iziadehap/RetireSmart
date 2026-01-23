@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
-import 'package:retiresmart/GoldPrice/gold_screen.dart';
-import 'RetireSmart/presentation/screens/retirement_screen.dart';
+import 'package:retiresmart/GoldPrice/presentation/controller/gold_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +14,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                Get.to(() => const GoldScreen());
+                Get.lazyPut(() => GoldController());
+                Get.toNamed('/gold');
               },
               child: Container(
                 color: Colors.red,
@@ -27,7 +27,8 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                Get.to(() => const RetirementScreen());
+                Get.lazyPut(() => GoldController());
+                Get.toNamed('/retirement');
               },
               child: Container(
                 color: Colors.green,
@@ -40,5 +41,12 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class HomeBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => GoldController());
   }
 }
