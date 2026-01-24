@@ -427,6 +427,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'LIVE'**
   String get live;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back,'**
+  String get welcomeBack;
+
+  /// No description provided for @goldInvestment.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Investment'**
+  String get goldInvestment;
+
+  /// No description provided for @retirementPlanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Retirement Planning'**
+  String get retirementPlanning;
+
+  /// No description provided for @retirementPlanningDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your golden years with confidence'**
+  String get retirementPlanningDesc;
+
+  /// No description provided for @goldInvestmentDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track live market rates & manage portfolio'**
+  String get goldInvestmentDesc;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @recalculate.
+  ///
+  /// In en, this message translates to:
+  /// **'Recalculate?'**
+  String get recalculate;
+
+  /// No description provided for @resetConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to start over? Current results will be lost.'**
+  String get resetConfirmation;
+
+  /// No description provided for @yesReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, Reset'**
+  String get yesReset;
+
+  /// No description provided for @noCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'No, Cancel'**
+  String get noCancel;
 }
 
 class _AppLocalizationsDelegate

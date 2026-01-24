@@ -1,5 +1,5 @@
 import 'package:get_x/get.dart';
-import 'package:retiresmart/GoldPrice/domain/models/gold_price_model.dart';
+import 'package:retiresmart/GoldPrice/data/models/gold_price_model.dart';
 import 'package:retiresmart/GoldPrice/domain/repo/gold_repo.dart';
 
 class GoldController extends GetxController {

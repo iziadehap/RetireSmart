@@ -53,5 +53,16 @@
     "sellPrice": "Sell Price",
     "buy": "Buy",
     "sell": "Sell",
-    "live": "LIVE"
+    "live": "LIVE",
+    "welcomeBack": "Welcome back,",
+    "goldInvestment": "Gold Investment",
+    "retirementPlanning": "Retirement Planning",
+    "retirementPlanningDesc": "Plan your golden years with confidence",
+    "goldInvestmentDesc": "Track live market rates & manage portfolio",
+    "settings": "Settings",
+    "recalculate": "Recalculate?",
+    "resetConfirmation": "Are you sure you want to start over? Current results will be lost.",
+    "yesReset": "Yes, Reset",
+    "noCancel": "No, Cancel"
+
 }

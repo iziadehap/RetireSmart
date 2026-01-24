@@ -53,6 +53,16 @@
     "sellPrice": "سعر البيع",
     "buy": "شراء",
     "sell": "بيع",
-    "live": "live"
+    "live": "live",
+    "welcomeBack": "مرحبا بعودتك",
+    "goldInvestment": "الاستثمار في الذهب",
+    "retirementPlanning": "التخطيط للتقاعد",
+    "retirementPlanningDesc": "خطط لسنواتك الذهبية بثقة",
+    "goldInvestmentDesc": "تتبع أسعار السوق الحية وإدارة محفظتك",
+    "settings": "الإعدادات",
+    "recalculate": "إعادة الحساب؟",
+    "resetConfirmation": "هل أنت متأكد من رغبتك في البدء من جديد؟ سيتم فقدان النتائج الحالية.",
+    "yesReset": "نعم، إعادة تعيين",
+    "noCancel": "لا، إلغاء"
 }
 

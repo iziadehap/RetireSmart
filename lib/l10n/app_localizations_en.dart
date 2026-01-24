@@ -173,4 +173,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get live => 'LIVE';
+
+  @override
+  String get welcomeBack => 'Welcome back,';
+
+  @override
+  String get goldInvestment => 'Gold Investment';
+
+  @override
+  String get retirementPlanning => 'Retirement Planning';
+
+  @override
+  String get retirementPlanningDesc => 'Plan your golden years with confidence';
+
+  @override
+  String get goldInvestmentDesc => 'Track live market rates & manage portfolio';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get recalculate => 'Recalculate?';
+
+  @override
+  String get resetConfirmation =>
+      'Are you sure you want to start over? Current results will be lost.';
+
+  @override
+  String get yesReset => 'Yes, Reset';
+
+  @override
+  String get noCancel => 'No, Cancel';
 }

@@ -1,11 +1,49 @@
 import 'dart:math';
-import '../../domain/models/retirement_model.dart';
+import 'package:retiresmart/RetireSmart/data/models/inflation_model.dart';
+import 'package:retiresmart/RetireSmart/domain/repo/retire_repo.dart';
+import '../entities/retirement_entities.dart';
 
 class RetirementCalculator {
-  static const double annualInflationRate = 0.105; // 10.5%
-  static const double safeWithdrawalRate = 0.04; // 4%
+  static Future<RetirementResult> calculate(
+    RetirementInput input,
+    RetireRepo repo,
+  ) async {
+    final getfromCache = await repo.getFromCache();
 
-  static RetirementResult calculate(RetirementInput input) {
+    if (getfromCache != null) {
+      print('find result and go to result screen now 1===================');
+      // return cached result
+      if (input == getfromCache['input']) {
+        print('find result and go to result screen now 2===================');
+        return getfromCache['result'];
+      }
+    }
+
+    final InflationModel inflationRate = await repo.getInflation();
+
+    // No need for average anymore; we'll use year-by-year in startCalculation
+    double safeWithdrawalRate = 0.04; // 4%
+
+    final RetirementResult result = _startCalculation(
+      input: input,
+      safeWithdrawalRate: safeWithdrawalRate,
+      inflationRate: inflationRate, // Pass the full model
+    );
+
+    // save result to cache
+    await repo.saveResult(result, input);
+    print('result get form api ===================');
+
+    return result;
+  }
+
+  // calculate
+
+  static RetirementResult _startCalculation({
+    required RetirementInput input,
+    required double safeWithdrawalRate,
+    required InflationModel inflationRate, // Added to use year-by-year
+  }) {
     if (input.currentAge >= input.retirementAge) {
       throw Exception("Current age must be less than retirement age");
     }
@@ -31,11 +69,24 @@ class RetirementCalculator {
         break;
     }
 
-    // 1. Future Annual Expenses
-    // Formula: PV * (1 + inflation)^years * 12 months
-    final double futureAnnualExpenses =
-        (input.monthlyExpenses * 12) *
-        pow(1 + annualInflationRate, yearsToRetirement);
+    // 1. Future Annual Expenses - Now using year-by-year inflation for more accuracy
+    double futureAnnualExpenses = input.monthlyExpenses * 12;
+
+    if (inflationRate.estimates != null &&
+        inflationRate.estimates!.isNotEmpty) {
+      // Loop through each year's inflation rate
+      for (var estimate in inflationRate.estimates!) {
+        if (estimate.inflation != null) {
+          futureAnnualExpenses *= (1 + estimate.inflation!);
+        }
+      }
+    } else {
+      // Fallback to average if no estimates (calculate average here if needed)
+      final double fallbackAverage = _calculateAverageInflationRate(
+        inflationRate,
+      );
+      futureAnnualExpenses *= pow(1 + fallbackAverage, yearsToRetirement);
+    }
 
     // 2. Required Nest Egg
     final double requiredNestEgg = futureAnnualExpenses / safeWithdrawalRate;
@@ -73,8 +124,8 @@ class RetirementCalculator {
     final double totalIncome =
         input.mainMonthlyIncome + (input.additionalMonthlyIncome ?? 0);
     final double availableSavings = totalIncome - input.monthlyExpenses;
-
-    return RetirementResult(
+    // last step
+    final result = RetirementResult(
       monthlySavingsNeeded: monthlySavingsNeeded > 0 ? monthlySavingsNeeded : 0,
       requiredNestEgg: requiredNestEgg,
       futureMonthlyExpenses: futureAnnualExpenses / 12,
@@ -82,5 +133,29 @@ class RetirementCalculator {
       availableSavings: availableSavings,
       investmentDistribution: distribution,
     );
+    return result;
+  }
+
+  // Keep this for fallback or average calculation
+  static double _calculateAverageInflationRate(InflationModel inflationRate) {
+    if (inflationRate.estimates == null || inflationRate.estimates!.isEmpty) {
+      return 0;
+    }
+    double sum = 0;
+    int count = 0;
+    for (int i = 0; i < inflationRate.estimates!.length; i++) {
+      if (inflationRate.estimates![i].inflation != null) {
+        sum += inflationRate.estimates![i].inflation!;
+        count++;
+      }
+    }
+
+    if (count == 0) {
+      return 0;
+    }
+
+    final averageInflationRate = sum / count;
+
+    return averageInflationRate;
   }
 }

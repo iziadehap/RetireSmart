@@ -3,7 +3,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiAuth {
-  static String _apiSecret = dotenv.env['SERVER_API']!;
+  static final String _apiSecret = dotenv.env['SERVER_API']!;
 
   static Map<String, String> getAuthHeaders() {
     final timestamp = (DateTime.now().millisecondsSinceEpoch ~/ 1000)

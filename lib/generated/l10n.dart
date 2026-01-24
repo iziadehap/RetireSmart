@@ -513,6 +513,91 @@ class S {
   String get live {
     return Intl.message('LIVE', name: 'live', desc: '', args: []);
   }
+
+  /// `Welcome back,`
+  String get welcomeBack {
+    return Intl.message(
+      'Welcome back,',
+      name: 'welcomeBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gold Investment`
+  String get goldInvestment {
+    return Intl.message(
+      'Gold Investment',
+      name: 'goldInvestment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retirement Planning`
+  String get retirementPlanning {
+    return Intl.message(
+      'Retirement Planning',
+      name: 'retirementPlanning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan your golden years with confidence`
+  String get retirementPlanningDesc {
+    return Intl.message(
+      'Plan your golden years with confidence',
+      name: 'retirementPlanningDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track live market rates & manage portfolio`
+  String get goldInvestmentDesc {
+    return Intl.message(
+      'Track live market rates & manage portfolio',
+      name: 'goldInvestmentDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message('Settings', name: 'settings', desc: '', args: []);
+  }
+
+  /// `Recalculate?`
+  String get recalculate {
+    return Intl.message(
+      'Recalculate?',
+      name: 'recalculate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to start over? Current results will be lost.`
+  String get resetConfirmation {
+    return Intl.message(
+      'Are you sure you want to start over? Current results will be lost.',
+      name: 'resetConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes, Reset`
+  String get yesReset {
+    return Intl.message('Yes, Reset', name: 'yesReset', desc: '', args: []);
+  }
+
+  /// `No, Cancel`
+  String get noCancel {
+    return Intl.message('No, Cancel', name: 'noCancel', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

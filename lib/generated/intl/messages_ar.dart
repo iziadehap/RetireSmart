@@ -84,6 +84,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "نستخدم هذه المعلومات لحساب الفجوة المالية.",
     ),
     "generatePlanButton": MessageLookupByLibrary.simpleMessage("إنشاء الخطة"),
+    "goldInvestment": MessageLookupByLibrary.simpleMessage(
+      "الاستثمار في الذهب",
+    ),
+    "goldInvestmentDesc": MessageLookupByLibrary.simpleMessage(
+      "تتبع أسعار السوق الحية وإدارة محفظتك",
+    ),
     "goldPrices": MessageLookupByLibrary.simpleMessage("سعر الذهب (live)"),
     "incomeExpensesTitle": MessageLookupByLibrary.simpleMessage(
       "الدخل والمصاريف",
@@ -100,11 +106,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "monthlyTargetLabel": MessageLookupByLibrary.simpleMessage("الهدف الشهري"),
     "nestEggLabel": MessageLookupByLibrary.simpleMessage("رأس المال المطلوب"),
     "nextButton": MessageLookupByLibrary.simpleMessage("التالي"),
+    "noCancel": MessageLookupByLibrary.simpleMessage("لا، إلغاء"),
     "pleaseWaitLabel": MessageLookupByLibrary.simpleMessage(
       "يرجى الانتظار لحظة...",
     ),
+    "recalculate": MessageLookupByLibrary.simpleMessage("إعادة الحساب؟"),
     "requiredSavingsLabel": MessageLookupByLibrary.simpleMessage(
       "المدخرات المطلوبة",
+    ),
+    "resetConfirmation": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد من رغبتك في البدء من جديد؟ سيتم فقدان النتائج الحالية.",
+    ),
+    "retirementPlanning": MessageLookupByLibrary.simpleMessage(
+      "التخطيط للتقاعد",
+    ),
+    "retirementPlanningDesc": MessageLookupByLibrary.simpleMessage(
+      "خطط لسنواتك الذهبية بثقة",
     ),
     "riskAppetiteLabel": MessageLookupByLibrary.simpleMessage(
       "قابلية المخاطرة",
@@ -123,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sell": MessageLookupByLibrary.simpleMessage("بيع"),
     "sellPrice": MessageLookupByLibrary.simpleMessage("سعر البيع"),
+    "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "source": MessageLookupByLibrary.simpleMessage("المصدر"),
     "step1Title": MessageLookupByLibrary.simpleMessage("لنبدأ بالأساسيات."),
     "targetRetirementAgeLabel": MessageLookupByLibrary.simpleMessage(
@@ -130,6 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "timelineLabel": MessageLookupByLibrary.simpleMessage("الجدول الزمني"),
     "unit": MessageLookupByLibrary.simpleMessage("الوحدة"),
+    "welcomeBack": MessageLookupByLibrary.simpleMessage("مرحبا بعودتك"),
     "withinBudgetLabel": MessageLookupByLibrary.simpleMessage("ضمن الميزانية"),
+    "yesReset": MessageLookupByLibrary.simpleMessage("نعم، إعادة تعيين"),
   };
 }

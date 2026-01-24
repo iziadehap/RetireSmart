@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
-import 'package:retiresmart/GoldPrice/domain/models/gold_price_model.dart';
+import 'package:retiresmart/GoldPrice/data/models/gold_price_model.dart';
 import 'package:retiresmart/GoldPrice/presentation/controller/gold_controller.dart';
 import 'package:retiresmart/GoldPrice/presentation/widgets/gold_shimmer_screen.dart';
 import 'package:retiresmart/core/colors.dart';

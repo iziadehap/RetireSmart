@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
-import '../../domain/models/retirement_model.dart';
+import 'package:retiresmart/RetireSmart/domain/repo/retire_repo.dart';
+import 'package:retiresmart/RetireSmart/domain/usecases/retirement_delete_cash.dart';
+import '../../domain/entities/retirement_entities.dart';
 import '../../domain/usecases/retirement_calculator.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 import '../screens/retirement_loading_screen.dart';
@@ -28,6 +30,26 @@ class RetirementController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController();
+    checkSavedSession();
+  }
+
+  void checkSavedSession() async {
+    try {
+      final repo = Get.find<RetireRepo>();
+      final cachedData = await repo.getFromCache();
+
+      if (cachedData != null && cachedData['result'] is RetirementResult) {
+        final result = cachedData['result'] as RetirementResult;
+        // Small delay to ensure UI is ready or just go immediately
+        // Using 0 delay to let the controller finish init
+        await Future.delayed(Duration.zero);
+        print('find result and go to result screen now ===================');
+        Get.off(() => RetirementResultScreen(result: result));
+      }
+    } catch (e) {
+      print('error checking saved session ===================');
+      debugPrint("Error checking saved session: $e");
+    }
   }
 
   @override
@@ -74,8 +96,10 @@ class RetirementController extends GetxController {
 
     switch (step) {
       case 0: // Basic Info
-        int? age = int.tryParse(ageController.text);
-        int? retAge = int.tryParse(retirementAgeController.text);
+        int? age = int.tryParse(ageController.text.replaceAll(',', ''));
+        int? retAge = int.tryParse(
+          retirementAgeController.text.replaceAll(',', ''),
+        );
         if (age == null || retAge == null) {
           errorMessage.value = s.errorValidAges;
           return false;
@@ -90,8 +114,12 @@ class RetirementController extends GetxController {
         }
         return true;
       case 1: // Income & Expenses
-        double? income = double.tryParse(mainIncomeController.text);
-        double? expenses = double.tryParse(expensesController.text);
+        double? income = double.tryParse(
+          mainIncomeController.text.replaceAll(',', ''),
+        );
+        double? expenses = double.tryParse(
+          expensesController.text.replaceAll(',', ''),
+        );
         if (income == null || expenses == null) {
           errorMessage.value = s.errorValidAmounts;
           return false;
@@ -102,7 +130,9 @@ class RetirementController extends GetxController {
         }
         return true;
       case 2: // Savings & Risk
-        double? savings = double.tryParse(savingsController.text);
+        double? savings = double.tryParse(
+          savingsController.text.replaceAll(',', ''),
+        );
         if (savings == null) {
           errorMessage.value = s.errorValidSavings;
           return false;
@@ -121,22 +151,33 @@ class RetirementController extends GetxController {
     // Navigate to loading
     Get.to(() => const RetirementLoadingScreen());
 
-    // Simulate delay
-    await Future.delayed(const Duration(seconds: 2));
-
     try {
       final input = RetirementInput(
-        currentAge: int.parse(ageController.text),
-        retirementAge: int.parse(retirementAgeController.text),
-        monthlyExpenses: double.parse(expensesController.text),
-        currentSavings: double.parse(savingsController.text),
-        mainMonthlyIncome: double.parse(mainIncomeController.text),
+        currentAge: int.parse(ageController.text.replaceAll(',', '')),
+        retirementAge: int.parse(
+          retirementAgeController.text.replaceAll(',', ''),
+        ),
+        monthlyExpenses: double.parse(
+          expensesController.text.replaceAll(',', ''),
+        ),
+        currentSavings: double.parse(
+          savingsController.text.replaceAll(',', ''),
+        ),
+        mainMonthlyIncome: double.parse(
+          mainIncomeController.text.replaceAll(',', ''),
+        ),
         additionalMonthlyIncome:
-            double.tryParse(additionalIncomeController.text) ?? 0,
+            double.tryParse(
+              additionalIncomeController.text.replaceAll(',', ''),
+            ) ??
+            0,
         riskLevel: selectedRiskLevel.value,
       );
 
-      final result = RetirementCalculator.calculate(input);
+      final result = await RetirementCalculator.calculate(
+        input,
+        Get.find<RetireRepo>(),
+      );
 
       // Navigate to results
       Get.off(() => RetirementResultScreen(result: result));
@@ -160,7 +201,8 @@ class RetirementController extends GetxController {
     }
   }
 
-  void reset() {
+  void reset() async {
+    await RetirementDeleteCash().delete(); // delete cash
     ageController.clear();
     retirementAgeController.text = "60";
     mainIncomeController.clear();
@@ -169,6 +211,9 @@ class RetirementController extends GetxController {
     savingsController.clear();
     errorMessage.value = '';
     currentStep.value = 0;
+    if (pageController.hasClients) {
+      pageController.jumpToPage(0);
+    }
     selectedRiskLevel.value = RiskLevel.medium;
   }
 }

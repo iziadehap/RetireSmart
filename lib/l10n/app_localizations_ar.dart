@@ -173,4 +173,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get live => 'live';
+
+  @override
+  String get welcomeBack => 'مرحبا بعودتك';
+
+  @override
+  String get goldInvestment => 'الاستثمار في الذهب';
+
+  @override
+  String get retirementPlanning => 'التخطيط للتقاعد';
+
+  @override
+  String get retirementPlanningDesc => 'خطط لسنواتك الذهبية بثقة';
+
+  @override
+  String get goldInvestmentDesc => 'تتبع أسعار السوق الحية وإدارة محفظتك';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get recalculate => 'إعادة الحساب؟';
+
+  @override
+  String get resetConfirmation =>
+      'هل أنت متأكد من رغبتك في البدء من جديد؟ سيتم فقدان النتائج الحالية.';
+
+  @override
+  String get yesReset => 'نعم، إعادة تعيين';
+
+  @override
+  String get noCancel => 'لا، إلغاء';
 }

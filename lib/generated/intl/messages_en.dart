@@ -84,6 +84,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "We use this to calculate your gap.",
     ),
     "generatePlanButton": MessageLookupByLibrary.simpleMessage("GENERATE PLAN"),
+    "goldInvestment": MessageLookupByLibrary.simpleMessage("Gold Investment"),
+    "goldInvestmentDesc": MessageLookupByLibrary.simpleMessage(
+      "Track live market rates & manage portfolio",
+    ),
     "goldPrices": MessageLookupByLibrary.simpleMessage("Gold Prices (Live)"),
     "incomeExpensesTitle": MessageLookupByLibrary.simpleMessage(
       "Income & Expenses",
@@ -104,11 +108,22 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "nestEggLabel": MessageLookupByLibrary.simpleMessage("NEST EGG"),
     "nextButton": MessageLookupByLibrary.simpleMessage("Next"),
+    "noCancel": MessageLookupByLibrary.simpleMessage("No, Cancel"),
     "pleaseWaitLabel": MessageLookupByLibrary.simpleMessage(
       "Please wait moment...",
     ),
+    "recalculate": MessageLookupByLibrary.simpleMessage("Recalculate?"),
     "requiredSavingsLabel": MessageLookupByLibrary.simpleMessage(
       "REQUIRED SAVINGS",
+    ),
+    "resetConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to start over? Current results will be lost.",
+    ),
+    "retirementPlanning": MessageLookupByLibrary.simpleMessage(
+      "Retirement Planning",
+    ),
+    "retirementPlanningDesc": MessageLookupByLibrary.simpleMessage(
+      "Plan your golden years with confidence",
     ),
     "riskAppetiteLabel": MessageLookupByLibrary.simpleMessage("RISK APPETITE"),
     "riskHigh": MessageLookupByLibrary.simpleMessage("High"),
@@ -125,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sell": MessageLookupByLibrary.simpleMessage("Sell"),
     "sellPrice": MessageLookupByLibrary.simpleMessage("Sell Price"),
+    "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "source": MessageLookupByLibrary.simpleMessage("Source"),
     "step1Title": MessageLookupByLibrary.simpleMessage(
       "Let\'s start with the basics.",
@@ -134,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "timelineLabel": MessageLookupByLibrary.simpleMessage("TIMELINE"),
     "unit": MessageLookupByLibrary.simpleMessage("Unit"),
+    "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome back,"),
     "withinBudgetLabel": MessageLookupByLibrary.simpleMessage("Within Budget"),
+    "yesReset": MessageLookupByLibrary.simpleMessage("Yes, Reset"),
   };
 }

@@ -4,7 +4,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:retiresmart/core/api/get_headers.dart';
-import 'package:retiresmart/GoldPrice/domain/models/gold_price_model.dart';
+import 'package:retiresmart/GoldPrice/data/models/gold_price_model.dart';
 
 class GoldApi {
   static const _baseUrl =
