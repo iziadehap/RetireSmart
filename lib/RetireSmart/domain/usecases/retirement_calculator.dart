@@ -31,8 +31,10 @@ class RetirementCalculator {
     );
 
     // save result to cache
-    await repo.saveResult(result, input);
+    await repo.saveResult(result, inflationRate);
     print('result get form api ===================');
+
+    // make a mix model
 
     return result;
   }
@@ -126,6 +128,7 @@ class RetirementCalculator {
     final double availableSavings = totalIncome - input.monthlyExpenses;
     // last step
     final result = RetirementResult(
+      inflationModel: inflationRate,
       monthlySavingsNeeded: monthlySavingsNeeded > 0 ? monthlySavingsNeeded : 0,
       requiredNestEgg: requiredNestEgg,
       futureMonthlyExpenses: futureAnnualExpenses / 12,

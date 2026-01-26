@@ -598,6 +598,16 @@ class S {
   String get noCancel {
     return Intl.message('No, Cancel', name: 'noCancel', desc: '', args: []);
   }
+
+  /// `Inflation Projection`
+  String get inflationProjectionLabel {
+    return Intl.message(
+      'Inflation Projection',
+      name: 'inflationProjectionLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -4,7 +4,7 @@ import 'package:retiresmart/core/text_core.dart';
 class RetirementDeleteCash {
   final cache = CacheService();
 
-  Future<void> delete() async {
+  Future<void> call() async {
     await cache.removeFromCash(TextCore.retirementResultKey);
   }
 }

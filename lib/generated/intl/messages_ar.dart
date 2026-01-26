@@ -94,6 +94,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "incomeExpensesTitle": MessageLookupByLibrary.simpleMessage(
       "الدخل والمصاريف",
     ),
+    "inflationProjectionLabel": MessageLookupByLibrary.simpleMessage(
+      "توقعات التضخم",
+    ),
     "karatPrices": MessageLookupByLibrary.simpleMessage(
       "أسعار القيراط (للغرام الواحد)",
     ),

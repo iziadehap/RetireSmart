@@ -63,6 +63,7 @@
     "recalculate": "إعادة الحساب؟",
     "resetConfirmation": "هل أنت متأكد من رغبتك في البدء من جديد؟ سيتم فقدان النتائج الحالية.",
     "yesReset": "نعم، إعادة تعيين",
-    "noCancel": "لا، إلغاء"
+    "noCancel": "لا، إلغاء",
+    "inflationProjectionLabel": "توقعات التضخم"
 }
 

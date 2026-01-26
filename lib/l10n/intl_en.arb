@@ -63,6 +63,7 @@
     "recalculate": "Recalculate?",
     "resetConfirmation": "Are you sure you want to start over? Current results will be lost.",
     "yesReset": "Yes, Reset",
-    "noCancel": "No, Cancel"
+    "noCancel": "No, Cancel",
+    "inflationProjectionLabel": "Inflation Projection"
 
 }

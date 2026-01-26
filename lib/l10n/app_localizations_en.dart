@@ -204,4 +204,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noCancel => 'No, Cancel';
+
+  @override
+  String get inflationProjectionLabel => 'Inflation Projection';
 }

@@ -3,6 +3,7 @@ import 'package:get_x/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:retiresmart/core/getPages.dart';
 import 'package:retiresmart/core/rockCode/cash_serves.dart';
+import 'package:retiresmart/core/text_core.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:retiresmart/RetireSmart/data/dataSources/retire_dataSources.dart';
@@ -12,7 +13,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   RetireDataSources().getInflation();
 
-  CacheService.init();
+  await CacheService.init();
 
   runApp(const MyApp());
 }
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       themeMode: ThemeMode.dark,
-      locale: const Locale('ar'),
+      locale: Locale(TextCore.lan),
       fallbackLocale: const Locale('en'),
       localizationsDelegates: const [
         AppLocalizations.delegate,

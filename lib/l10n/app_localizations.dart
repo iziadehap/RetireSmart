@@ -487,6 +487,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No, Cancel'**
   String get noCancel;
+
+  /// No description provided for @inflationProjectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Inflation Projection'**
+  String get inflationProjectionLabel;
 }
 
 class _AppLocalizationsDelegate

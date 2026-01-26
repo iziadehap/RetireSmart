@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
+import 'package:retiresmart/RetireSmart/data/models/inflation_model.dart';
 import 'package:retiresmart/RetireSmart/domain/repo/retire_repo.dart';
 import 'package:retiresmart/RetireSmart/domain/usecases/retirement_delete_cash.dart';
 import '../../domain/entities/retirement_entities.dart';
 import '../../domain/usecases/retirement_calculator.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
-import '../screens/retirement_loading_screen.dart';
 import '../screens/retirement_result_screen.dart';
 
 class RetirementController extends GetxController {
   // Wizard Navigation
+  var isLoading = false.obs;
   var currentStep = 0.obs;
   final int totalSteps = 3;
   late PageController pageController;
@@ -44,7 +45,12 @@ class RetirementController extends GetxController {
         // Using 0 delay to let the controller finish init
         await Future.delayed(Duration.zero);
         print('find result and go to result screen now ===================');
-        Get.off(() => RetirementResultScreen(result: result));
+        Get.off(
+          () => RetirementResultScreen(
+            result: result,
+            inflationModel: cachedData['inflationModel'] as InflationModel,
+          ),
+        );
       }
     } catch (e) {
       print('error checking saved session ===================');
@@ -148,8 +154,7 @@ class RetirementController extends GetxController {
   }
 
   void submitCalculation() async {
-    // Navigate to loading
-    Get.to(() => const RetirementLoadingScreen());
+    isLoading.value = true;
 
     try {
       final input = RetirementInput(
@@ -179,10 +184,17 @@ class RetirementController extends GetxController {
         Get.find<RetireRepo>(),
       );
 
+      isLoading.value = false;
+
       // Navigate to results
-      Get.off(() => RetirementResultScreen(result: result));
+      Get.off(
+        () => RetirementResultScreen(
+          result: result,
+          inflationModel: result.inflationModel,
+        ),
+      );
     } catch (e) {
-      Get.back(); // Close loading
+      isLoading.value = false;
       Get.snackbar(
         Get.context != null
             ? AppLocalizations.of(Get.context!)!.errorGeneric
@@ -202,7 +214,7 @@ class RetirementController extends GetxController {
   }
 
   void reset() async {
-    await RetirementDeleteCash().delete(); // delete cash
+    await RetirementDeleteCash().call(); // delete cash
     ageController.clear();
     retirementAgeController.text = "60";
     mainIncomeController.clear();

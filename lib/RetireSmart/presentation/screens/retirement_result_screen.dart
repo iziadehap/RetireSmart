@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:retiresmart/RetireSmart/presentation/screens/retirement_defaoutdialog.dart';
+import 'package:retiresmart/RetireSmart/data/models/inflation_model.dart';
+import 'package:retiresmart/RetireSmart/presentation/widgets/retirement_defaoutdialog.dart';
 import 'package:retiresmart/core/text_core.dart';
 import '../../domain/entities/retirement_entities.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 
 class RetirementResultScreen extends StatelessWidget {
   final RetirementResult result;
-  
+  final InflationModel inflationModel;
 
   // 2026 Theme Colors
   final Color accent = const Color(0xFF00F5FF); // Cyan Neon
   final Color success = const Color(0xFF00E676); // Neon Green
   final Color warning = const Color(0xFFFFEA00); // Neon Yellow
 
-  const RetirementResultScreen({super.key, required this.result});
+  const RetirementResultScreen({
+    super.key,
+    required this.result,
+    required this.inflationModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +116,10 @@ class RetirementResultScreen extends StatelessWidget {
                   FadeIn(delay: 400, child: _buildMetricsGrid(s)),
 
                   const SizedBox(height: 24),
+                  // add chart of inflation
+                  FadeIn(delay: 500, child: _buildInflationChart(s)),
 
+                  const SizedBox(height: 24),
                   // Distribution Chart
                   FadeIn(delay: 600, child: _buildPortfolioCard(s)),
 
@@ -122,10 +130,7 @@ class RetirementResultScreen extends StatelessWidget {
                     delay: 800,
                     child: ElevatedButton(
                       onPressed: () {
-                        showRetirementDialog(
-                          context: context,
-                          accent: accent,
-                        );
+                        showRetirementDialog(context: context, accent: accent);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: accent,
@@ -391,6 +396,71 @@ class RetirementResultScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildInflationChart(AppLocalizations s) {
+    if (inflationModel.estimates == null || inflationModel.estimates!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.03),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                s.inflationProjectionLabel,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Icon(Icons.auto_graph_rounded, color: warning, size: 20),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 180,
+            width: double.infinity,
+            child: CustomPaint(
+              painter: InflationChartPainter(
+                estimates: inflationModel.estimates!,
+                lineColor: warning,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "${inflationModel.estimates!.first.year}",
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.3),
+                  fontSize: 10,
+                ),
+              ),
+              Text(
+                "${inflationModel.estimates!.last.year}",
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.3),
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Color _getColorForAsset(String asset) {
     switch (asset) {
       case 'Stocks':
@@ -452,6 +522,150 @@ class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
       child: FadeTransition(opacity: _opacity, child: widget.child),
     );
   }
+}
+
+class InflationChartPainter extends CustomPainter {
+  final List<Estimate> estimates;
+  final Color lineColor;
+
+  InflationChartPainter({required this.estimates, required this.lineColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (estimates.length < 2) return;
+
+    // --- Background Grid/Lines (Subtle 2026 style) ---
+    final gridPaint = Paint()
+      ..color = Colors.white.withOpacity(0.05)
+      ..strokeWidth = 0.5;
+
+    for (int i = 0; i <= 4; i++) {
+      double y = size.height * (i / 4);
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
+    }
+
+    // --- Data Path Logic ---
+    final path = Path();
+    final fillPath = Path();
+
+    // Calculate scaling
+    double maxX = estimates.length.toDouble() - 1;
+    double minY = estimates
+        .map((e) => e.inflation ?? 0)
+        .reduce((a, b) => a < b ? a : b);
+    double maxY = estimates
+        .map((e) => e.inflation ?? 0)
+        .reduce((a, b) => a > b ? a : b);
+
+    // Dynamic padding for min/max
+    minY = minY * 0.9;
+    maxY = maxY * 1.1;
+
+    double xStep = size.width / maxX;
+    double yRange = maxY - minY;
+
+    List<Offset> points = [];
+    for (int i = 0; i < estimates.length; i++) {
+      double x = i * xStep;
+      double y =
+          size.height -
+          ((estimates[i].inflation! - minY) / yRange * size.height);
+      points.add(Offset(x, y));
+    }
+
+    // Smooth Path with Cubic Bezier
+    path.moveTo(points[0].dx, points[0].dy);
+    fillPath.moveTo(points[0].dx, size.height);
+    fillPath.lineTo(points[0].dx, points[0].dy);
+
+    for (int i = 0; i < points.length - 1; i++) {
+      double x1 = points[i].dx;
+      double y1 = points[i].dy;
+      double x2 = points[i + 1].dx;
+      double y2 = points[i + 1].dy;
+
+      double cx1 = x1 + (x2 - x1) / 2;
+      double cx2 = x1 + (x2 - x1) / 2;
+
+      path.cubicTo(cx1, y1, cx2, y2, x2, y2);
+      fillPath.cubicTo(cx1, y1, cx2, y2, x2, y2);
+    }
+
+    fillPath.lineTo(size.width, size.height);
+    fillPath.close();
+
+    // --- Layer 1: Fill Gradient (Area under line) ---
+    final fillGradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        lineColor.withOpacity(0.3),
+        lineColor.withOpacity(0.1),
+        Colors.transparent,
+      ],
+      stops: const [0.0, 0.5, 1.0],
+    );
+    canvas.drawPath(
+      fillPath,
+      Paint()
+        ..shader = fillGradient.createShader(
+          Rect.fromLTWH(0, 0, size.width, size.height),
+        ),
+    );
+
+    // --- Layer 2: Outer Glow (Shadow) ---
+    final glowPaint = Paint()
+      ..color = lineColor.withOpacity(0.5)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+    canvas.drawPath(path, glowPaint);
+
+    // --- Layer 3: Main Neon Line ---
+    final mainLinePaint = Paint()
+      ..color = lineColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5
+      ..strokeCap = StrokeCap.round;
+
+    // Gradient along the line (Subtle fade at ends)
+    final lineGradient = LinearGradient(
+      colors: [
+        lineColor.withOpacity(0.5),
+        lineColor,
+        lineColor.withOpacity(0.5),
+      ],
+    ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+    mainLinePaint.shader = lineGradient;
+
+    canvas.drawPath(path, mainLinePaint);
+
+    // --- Layer 4: Interactive-style Data Dots ---
+    final dotPaint = Paint()..style = PaintingStyle.fill;
+    final dotStroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = const Color(0xFF0A0A0A);
+
+    for (int i = 0; i < points.length; i++) {
+      // Logic to only draw significant points to keep it clean
+      if (i == 0 || i == points.length - 1 || (i % (maxX / 4).round()) == 0) {
+        // Outer Halo for point
+        canvas.drawCircle(
+          points[i],
+          6,
+          Paint()..color = lineColor.withOpacity(0.2),
+        );
+        // Main Dot
+        dotPaint.color = lineColor;
+        canvas.drawCircle(points[i], 3, dotPaint);
+        canvas.drawCircle(points[i], 3, dotStroke);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
 class DotGridPainter extends CustomPainter {

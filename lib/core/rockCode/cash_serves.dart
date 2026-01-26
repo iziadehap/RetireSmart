@@ -1,4 +1,5 @@
 import 'package:retiresmart/GoldPrice/data/models/gold_price_model.dart';
+import 'package:retiresmart/RetireSmart/data/models/inflation_model.dart';
 import 'package:retiresmart/RetireSmart/domain/entities/retirement_entities.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -15,6 +16,9 @@ class CacheService {
     Hive.registerAdapter(RiskLevelAdapter());
     Hive.registerAdapter(RetirementInputAdapter());
     Hive.registerAdapter(RetirementResultAdapter());
+    Hive.registerAdapter(InflationModelAdapter());
+    Hive.registerAdapter(EstimateAdapter());
+    Hive.registerAdapter(ParamsAdapter());
     await Hive.openBox(_boxName);
   }
 

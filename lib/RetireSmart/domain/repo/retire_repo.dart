@@ -6,6 +6,6 @@ abstract class RetireRepo {
     int years = 20,
     String risk = 'medium',
   });
-  Future<bool> saveResult(RetirementResult result, RetirementInput input);
+  Future<bool> saveResult(RetirementResult result, InflationModel inflationModel);
   Future<Map<dynamic, dynamic>?> getFromCache();
 }

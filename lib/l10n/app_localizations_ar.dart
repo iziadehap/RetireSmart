@@ -204,4 +204,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noCancel => 'لا، إلغاء';
+
+  @override
+  String get inflationProjectionLabel => 'توقعات التضخم';
 }

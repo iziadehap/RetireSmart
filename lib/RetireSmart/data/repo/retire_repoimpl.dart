@@ -21,9 +21,9 @@ class RetireRepoImpl implements RetireRepo {
   @override
   Future<bool> saveResult(
     RetirementResult result,
-    RetirementInput input,
+    InflationModel inflationModel,
   ) async {
-    final data = {'result': result, 'input': input};
+    final data = {'result': result, 'inflationModel': inflationModel};
 
     print('save result to cache ===================');
 

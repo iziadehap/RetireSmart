@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For TextInputFormatter
 import 'package:get_x/get.dart';
-import 'package:intl/intl.dart'; // For NumberFormat
 import '../controllers/retirement_controller.dart';
 import '../../domain/entities/retirement_entities.dart';
+import '../widgets/retirement_loader.dart';
+import '../widgets/retire_widgets.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 
 class RetirementWizardScreen extends StatelessWidget {
@@ -16,94 +17,100 @@ class RetirementWizardScreen extends StatelessWidget {
     final s = AppLocalizations.of(context)!;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFF0A0A0A),
-      resizeToAvoidBottomInset:
-          false, // Handle keyboard by padding if needed, or scroll view
-      body: Stack(
-        children: [
-          // Ambient Glow (Cyan/Blue for Retirement)
-          Positioned(
-            top: -100,
-            left: -100,
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF00F5FF).withOpacity(0.05),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF00F5FF).withOpacity(0.05),
-                    blurRadius: 100,
-                    spreadRadius: 50,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const RetirementLoader();
+        }
+        return Stack(
+          children: [
+            // Ambient Glow (fixed background)
+            Positioned.fill(
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: -100,
+                    left: -100,
+                    child: Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF00F5FF).withOpacity(0.05),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF00F5FF).withOpacity(0.05),
+                            blurRadius: 100,
+                            spreadRadius: 50,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: DotGridPainter(
+                        color: Colors.white,
+                        spacing: 40,
+                        opacity: 0.03,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
 
-          // Dotted Grid Overlay
-          Positioned.fill(
-            child: CustomPaint(
-              painter: DotGridPainter(
-                color: Colors.white,
-                spacing: 40,
-                opacity: 0.03,
-              ),
-            ),
-          ),
-
-          SafeArea(
-            child: Column(
-              children: [
-                // Custom AppBar
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                    vertical: 16.0,
-                  ),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Get.back(),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.05),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.1),
+            SafeArea(
+              child: Column(
+                children: [
+                  // Custom AppBar
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0,
+                      vertical: 16.0,
+                    ),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.1),
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                              size: 20,
                             ),
                           ),
-                          child: const Icon(
-                            Icons.arrow_back_ios_new,
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          s.appTitle, // "Retirement Planner"
+                          style: const TextStyle(
                             color: Colors.white,
-                            size: 20,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 20),
-                      Text(
-                        s.appTitle, // "Retirement Planner"
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // Progress Indicator
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                    vertical: 10,
-                  ),
-                  child: Obx(() {
-                    return Row(
+                  // Progress Indicator
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0,
+                      vertical: 10,
+                    ),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(controller.totalSteps, (index) {
                         bool isActive = index <= controller.currentStep.value;
@@ -130,65 +137,74 @@ class RetirementWizardScreen extends StatelessWidget {
                           ),
                         );
                       }),
-                    );
-                  }),
-                ),
-
-                // Content Area
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.03),
-                      borderRadius: BorderRadius.circular(32),
-                      border: Border.all(color: Colors.white.withOpacity(0.08)),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(32),
-                      child: PageView(
-                        controller: controller.pageController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          _buildStepContent(
-                            _buildStep1(controller, const Color(0xFF00F5FF), s),
-                          ),
-                          _buildStepContent(
-                            _buildStep2(controller, const Color(0xFF00F5FF), s),
-                          ),
-                          _buildStepContent(
-                            _buildStep3(controller, const Color(0xFF00F5FF), s),
-                          ),
-                        ],
+                  ),
+
+                  // Content Area
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.03),
+                        borderRadius: BorderRadius.circular(32),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.08),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: PageView(
+                          controller: controller.pageController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            _buildStepContent(
+                              _buildStep1(
+                                controller,
+                                const Color(0xFF00F5FF),
+                                s,
+                              ),
+                            ),
+                            _buildStepContent(
+                              _buildStep2(
+                                controller,
+                                const Color(0xFF00F5FF),
+                                s,
+                              ),
+                            ),
+                            _buildStepContent(
+                              _buildStep3(
+                                controller,
+                                const Color(0xFF00F5FF),
+                                s,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                // Navigation Buttons
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                  child: Row(
-                    children: [
-                      Obx(
-                        () => controller.currentStep.value > 0
-                            ? Expanded(
-                                flex: 1,
-                                child: _buildNavButton(
-                                  onTap: controller.previousStep,
-                                  label: s.backButton,
-                                  isPrimary: false,
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ),
+                  // Navigation Buttons
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                    child: Row(
+                      children: [
+                        if (controller.currentStep.value > 0)
+                          Expanded(
+                            flex: 1,
+                            child: _buildNavButton(
+                              onTap: controller.previousStep,
+                              label: s.backButton,
+                              isPrimary: false,
+                            ),
+                          ),
 
-                      if (controller.currentStep.value > 0)
-                        const SizedBox(width: 16),
+                        if (controller.currentStep.value > 0)
+                          const SizedBox(width: 16),
 
-                      Expanded(
-                        flex: 2,
-                        child: Obx(
-                          () => _buildNavButton(
+                        Expanded(
+                          flex: 2,
+                          child: _buildNavButton(
                             onTap: controller.nextStep,
                             label:
                                 controller.currentStep.value ==
@@ -198,59 +214,54 @@ class RetirementWizardScreen extends StatelessWidget {
                             isPrimary: true,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // Error Toast
-                Obx(
-                  () => controller.errorMessage.isNotEmpty
-                      ? FadeIn(
-                          delay: 0,
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 10,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.redAccent.withOpacity(0.1),
-                              border: Border.all(
-                                color: Colors.redAccent.withOpacity(0.5),
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.error_outline,
-                                  color: Colors.redAccent,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                    controller.errorMessage.value,
-                                    style: const TextStyle(
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                  // Error Toast
+                  if (controller.errorMessage.isNotEmpty)
+                    FadeIn(
+                      delay: 0,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 10,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent.withOpacity(0.1),
+                          border: Border.all(
+                            color: Colors.redAccent.withOpacity(0.5),
                           ),
-                        )
-                      : const SizedBox.shrink(),
-                ),
-              ],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.error_outline,
+                              color: Colors.redAccent,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                controller.errorMessage.value,
+                                style: const TextStyle(color: Colors.redAccent),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 
@@ -570,131 +581,6 @@ class RetirementWizardScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// Re-using utils locally to keep screen self-contained
-
-class FadeIn extends StatefulWidget {
-  final Widget child;
-  final int delay;
-  const FadeIn({super.key, required this.child, required this.delay});
-  @override
-  State<FadeIn> createState() => _FadeInState();
-}
-
-class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _opacity;
-  late Animation<Offset> _translate;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    _opacity = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    _translate = Tween<Offset>(
-      begin: const Offset(0, 0.1),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    Future.delayed(Duration(milliseconds: widget.delay), () {
-      if (mounted) _controller.forward();
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _translate,
-      child: FadeTransition(opacity: _opacity, child: widget.child),
-    );
-  }
-}
-
-class DotGridPainter extends CustomPainter {
-  final Color color;
-  final double spacing;
-  final double opacity;
-  DotGridPainter({
-    this.color = Colors.white,
-    this.spacing = 30.0,
-    this.opacity = 0.05,
-  });
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = color.withOpacity(opacity)
-      ..style = PaintingStyle.fill;
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x, y), 1.0, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class ThousandsSeparatorInputFormatter extends TextInputFormatter {
-  static const separator = ',';
-
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    // Short-circuit if the new value is empty
-    if (newValue.text.isEmpty) {
-      return newValue;
-    }
-
-    // Handle "deletion" of separator
-    if (oldValue.text.length > newValue.text.length) {
-      final oldSelectionEnd = oldValue.selection.end;
-      if (oldValue.text.substring(oldSelectionEnd - 1, oldSelectionEnd) ==
-          separator) {
-        // If the user tried to delete the separator, delete the digit before it instead
-        final newText =
-            oldValue.text.substring(0, oldSelectionEnd - 2) +
-            oldValue.text.substring(oldSelectionEnd);
-        return _format(newText, oldValue);
-      }
-    }
-
-    return _format(newValue.text, oldValue);
-  }
-
-  TextEditingValue _format(String text, TextEditingValue oldValue) {
-    // Clean all non-digit characters (except dot if decimal support is needed, assuming integer/money here mostly)
-    // If we want to support decimals, we need regex like [^0-9.]
-    String cleanText = text.replaceAll(RegExp(r'[^0-9]'), '');
-
-    // Parse to number
-    if (cleanText.isEmpty) return oldValue;
-
-    // Create new formatted string
-    final number = int.tryParse(cleanText);
-    if (number == null) return oldValue;
-
-    final result = NumberFormat('#,###').format(number);
-
-    return TextEditingValue(
-      text: result,
-      selection: TextSelection.collapsed(offset: result.length),
     );
   }
 }

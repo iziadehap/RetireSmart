@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:retiresmart/RetireSmart/data/models/inflation_model.dart';
 
 part 'retirement_entities.g.dart';
 
@@ -54,8 +55,11 @@ class RetirementResult {
   final double availableSavings;
   @HiveField(5)
   final Map<String, double> investmentDistribution;
+  @HiveField(6)
+  final InflationModel inflationModel;
 
   RetirementResult({
+    required this.inflationModel,
     required this.monthlySavingsNeeded,
     required this.requiredNestEgg,
     required this.futureMonthlyExpenses,

@@ -69,6 +69,7 @@ class RetirementResultAdapter extends TypeAdapter<RetirementResult> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return RetirementResult(
+      inflationModel: fields[6] as InflationModel,
       monthlySavingsNeeded: fields[0] as double,
       requiredNestEgg: fields[1] as double,
       futureMonthlyExpenses: fields[2] as double,
@@ -81,7 +82,7 @@ class RetirementResultAdapter extends TypeAdapter<RetirementResult> {
   @override
   void write(BinaryWriter writer, RetirementResult obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.monthlySavingsNeeded)
       ..writeByte(1)
@@ -93,7 +94,9 @@ class RetirementResultAdapter extends TypeAdapter<RetirementResult> {
       ..writeByte(4)
       ..write(obj.availableSavings)
       ..writeByte(5)
-      ..write(obj.investmentDistribution);
+      ..write(obj.investmentDistribution)
+      ..writeByte(6)
+      ..write(obj.inflationModel);
   }
 
   @override

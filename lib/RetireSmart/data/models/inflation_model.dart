@@ -1,7 +1,16 @@
+import 'package:hive/hive.dart';
+
+part 'inflation_model.g.dart';
+
+@HiveType(typeId: 5)
 class InflationModel {
+  @HiveField(0)
   List<Estimate>? estimates;
+  @HiveField(1)
   Params? params;
+  @HiveField(2)
   List<String>? sources;
+  @HiveField(3)
   String? disclaimer;
 
   InflationModel({this.estimates, this.params, this.sources, this.disclaimer});
@@ -32,8 +41,11 @@ class InflationModel {
   }
 }
 
+@HiveType(typeId: 6)
 class Estimate {
+  @HiveField(0)
   int? year;
+  @HiveField(1)
   double? inflation;
 
   Estimate({this.year, this.inflation});
@@ -51,8 +63,11 @@ class Estimate {
   }
 }
 
+@HiveType(typeId: 7)
 class Params {
+  @HiveField(0)
   int? years;
+  @HiveField(1)
   String? risk;
 
   Params({this.years, this.risk});
