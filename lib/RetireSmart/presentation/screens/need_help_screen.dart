@@ -4,24 +4,22 @@ import 'package:retiresmart/RetireSmart/presentation/widgets/common_painters.dar
 import 'package:retiresmart/RetireSmart/presentation/widgets/fade_in_animation.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
 class InvestmentGuideScreen extends StatelessWidget {
   const InvestmentGuideScreen({super.key});
-
-  final Color accent = const Color(0xFF00F5FF); // Cyan Neon
-  final Color success = const Color(0xFF00E676); // Neon Green
-  final Color warning = const Color(0xFFFFEA00); // Neon Yellow
-  final Color bg = const Color(0xFF0A0A0A);
 
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
     final isArabic = Get.locale?.languageCode == 'ar';
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Directionality(
       textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
-        backgroundColor: bg,
+        backgroundColor: colors.background,
         body: Stack(
           children: [
             // Ambient Glow
@@ -33,10 +31,10 @@ class InvestmentGuideScreen extends StatelessWidget {
                 height: 300,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: accent.withOpacity(0.05),
+                  color: colors.accentCyan.withOpacity(0.05),
                   boxShadow: [
                     BoxShadow(
-                      color: accent.withOpacity(0.05),
+                      color: colors.accentCyan.withOpacity(0.05),
                       blurRadius: 100,
                       spreadRadius: 50,
                     ),
@@ -49,9 +47,9 @@ class InvestmentGuideScreen extends StatelessWidget {
             Positioned.fill(
               child: CustomPaint(
                 painter: DotGridPainter(
-                  color: Colors.white,
+                  color: colors.text,
                   spacing: 40,
-                  opacity: 0.02,
+                  opacity: isDark ? 0.02 : 0.04,
                 ),
               ),
             ),
@@ -67,9 +65,9 @@ class InvestmentGuideScreen extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () => Get.back(),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.arrow_back_ios_new,
-                            color: Colors.white,
+                            color: colors.text,
                             size: 20,
                           ),
                         ),
@@ -77,7 +75,7 @@ class InvestmentGuideScreen extends StatelessWidget {
                         Text(
                           s.investmentGuideTitle,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
+                            color: colors.subtext,
                             fontSize: 14,
                             letterSpacing: 2,
                             fontWeight: FontWeight.bold,
@@ -99,12 +97,12 @@ class InvestmentGuideScreen extends StatelessWidget {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              Colors.white.withOpacity(0.05),
-                              Colors.white.withOpacity(0.02),
+                              colors.text.withOpacity(0.05),
+                              colors.text.withOpacity(0.02),
                             ],
                           ),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.08),
+                            color: colors.text.withOpacity(0.08),
                           ),
                         ),
                         child: Column(
@@ -115,21 +113,14 @@ class InvestmentGuideScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: accent.withOpacity(0.2),
+                                  color: colors.accentCyan.withOpacity(0.2),
                                 ),
-                                // image: const DecorationImage(
-                                //   image: AssetImage("assets/images/thndr.png"),
-                                //   fit: BoxFit.cover,
-                                // ),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.asset(
                                   "assets/images/thndr.png",
                                   fit: BoxFit.cover,
-                                  // Icons.flash_on,
-                                  // color: Color(0xFF00F5FF),
-                                  // size: 40,
                                 ),
                               ),
                             ),
@@ -137,8 +128,8 @@ class InvestmentGuideScreen extends StatelessWidget {
                             Text(
                               s.thndrGuideTitle,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: colors.text,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -150,17 +141,17 @@ class InvestmentGuideScreen extends StatelessWidget {
                                 vertical: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: success.withOpacity(0.1),
+                                color: colors.success.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: success.withOpacity(0.3),
+                                  color: colors.success.withOpacity(0.3),
                                 ),
                               ),
                               child: Text(
                                 s.thndrRecommendation,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: success,
+                                  color: colors.success,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
                                 ),
@@ -175,26 +166,29 @@ class InvestmentGuideScreen extends StatelessWidget {
 
                     // Sections
                     _buildSectionCard(
+                      context: context,
                       title: s.goldSectionTitle,
                       description: s.goldSectionDesc,
                       icon: Icons.workspace_premium,
-                      color: warning,
+                      color: colors.primaryGold,
                       delay: 400,
                     ),
 
                     const SizedBox(height: 16),
 
                     _buildSectionCard(
+                      context: context,
                       title: s.stocksSectionTitle,
                       description: s.stocksSectionDesc,
                       icon: Icons.trending_up,
-                      color: accent,
+                      color: colors.accentCyan,
                       delay: 600,
                     ),
 
                     const SizedBox(height: 16),
 
                     _buildSectionCard(
+                      context: context,
                       title: s.certificatesSectionTitle,
                       description: s.certificatesSectionDesc,
                       icon: Icons.account_balance,
@@ -215,14 +209,14 @@ class InvestmentGuideScreen extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: accent,
-                          foregroundColor: Colors.black,
+                          backgroundColor: colors.accentCyan,
+                          foregroundColor: isDark ? Colors.black : Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                           elevation: 10,
-                          shadowColor: accent.withOpacity(0.4),
+                          shadowColor: colors.accentCyan.withOpacity(0.4),
                         ),
                         child: Text(
                           s.downloadThndr,
@@ -244,7 +238,7 @@ class InvestmentGuideScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.1),
+                              color: colors.text.withOpacity(0.1),
                             ),
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -252,7 +246,7 @@ class InvestmentGuideScreen extends StatelessWidget {
                             s.referralMessage,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
+                              color: colors.subtext,
                               fontSize: 12,
                             ),
                           ),
@@ -261,18 +255,6 @@ class InvestmentGuideScreen extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 40),
-
-                    // Disclaimer
-                    // Text(
-                    //   s.investmentDisclaimer,
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //     color: Colors.white.withOpacity(0.3),
-                    //     fontSize: 11,
-                    //     fontStyle: FontStyle.italic,
-                    //   ),
-                    // ),
-                    const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -284,20 +266,22 @@ class InvestmentGuideScreen extends StatelessWidget {
   }
 
   Widget _buildSectionCard({
+    required BuildContext context,
     required String title,
     required String description,
     required IconData icon,
     required Color color,
     required int delay,
   }) {
+    final colors = AppThemeColors.of(context);
     return FadeIn(
       delay: delay,
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.03),
+          color: colors.text.withOpacity(0.03),
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.white.withOpacity(0.05)),
+          border: Border.all(color: colors.text.withOpacity(0.05)),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,8 +301,8 @@ class InvestmentGuideScreen extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: colors.text,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -327,7 +311,7 @@ class InvestmentGuideScreen extends StatelessWidget {
                   Text(
                     description,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
+                      color: colors.subtext,
                       fontSize: 14,
                       height: 1.5,
                     ),

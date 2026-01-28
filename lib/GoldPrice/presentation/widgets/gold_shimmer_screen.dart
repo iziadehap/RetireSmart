@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:retiresmart/core/colors.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
 class GoldShimmerScreen extends StatelessWidget {
   const GoldShimmerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Dark theme base colors
-    final baseColor = Colors.white.withOpacity(0.05);
-    final highlightColor = Colors.white.withOpacity(0.1);
+    final colors = AppThemeColors.of(context);
+
+    // Theme-aware base colors
+    final baseColor = colors.text.withOpacity(0.05);
+    final highlightColor = colors.text.withOpacity(0.1);
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [bgStart, bgEnd],
-        ),
-      ),
+      decoration: BoxDecoration(color: colors.background),
       child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),

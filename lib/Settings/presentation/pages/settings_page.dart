@@ -3,17 +3,20 @@ import 'package:get_x/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import '../controller/settings_controller.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
 class SettingsPage extends GetView<SettingsController> {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppThemeColors.of(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0A0A),
+      backgroundColor: colors.background,
       body: Stack(
         children: [
-          // Ambient Background Light (Cyan for Settings)
+          // Ambient Background Light
           Positioned(
             top: -100,
             right: -100,
@@ -22,10 +25,10 @@ class SettingsPage extends GetView<SettingsController> {
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.05),
+                color: colors.text.withOpacity(0.05),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.05),
+                    color: colors.text.withOpacity(0.05),
                     blurRadius: 100,
                     spreadRadius: 50,
                   ),
@@ -38,9 +41,11 @@ class SettingsPage extends GetView<SettingsController> {
           Positioned.fill(
             child: CustomPaint(
               painter: DotGridPainter(
-                color: Colors.white,
+                color: colors.text,
                 spacing: 40,
-                opacity: 0.03,
+                opacity: Theme.of(context).brightness == Brightness.dark
+                    ? 0.03
+                    : 0.05,
               ),
             ),
           ),
@@ -48,177 +53,245 @@ class SettingsPage extends GetView<SettingsController> {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  // Custom Back Button
-                  GestureDetector(
-                    onTap: () => Get.back(),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.1),
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-                  // Header
-                  FadeIn(
-                    delay: 200,
-                    child: Text(
-                      AppLocalizations.of(context)!.settings,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: -1,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-
-                  // Language Section
-                  FadeIn(
-                    delay: 400,
-                    child: Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.03),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.1),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
-                            children: [
-                              Icon(
-                                Icons.language,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              SizedBox(width: 12),
-                              Text(
-                                "Language",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    // Custom Back Button
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: colors.text.withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: colors.text.withOpacity(0.1),
                           ),
-                          const SizedBox(height: 24),
+                        ),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: colors.text,
+                          size: 20,
+                        ),
+                      ),
+                    ),
 
-                          // Language Options
-                          Obx(
-                            () => Row(
+                    const SizedBox(height: 30),
+                    // Header
+                    FadeIn(
+                      delay: 200,
+                      child: Text(
+                        AppLocalizations.of(context)!.settings,
+                        style: TextStyle(
+                          color: colors.text,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -1,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+
+                    // Language Section
+                    FadeIn(
+                      delay: 400,
+                      child: Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: colors.text.withOpacity(0.03),
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: colors.text.withOpacity(0.1),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                _buildLanguageOption(
-                                  context,
-                                  "English",
-                                  "en",
-                                  controller.currentStartLang.value == 'en',
+                                Icon(
+                                  Icons.language,
+                                  color: colors.text,
+                                  size: 24,
                                 ),
-                                const SizedBox(width: 16),
-                                _buildLanguageOption(
-                                  context,
-                                  "العربية",
-                                  "ar",
-                                  controller.currentStartLang.value == 'ar',
+                                const SizedBox(width: 12),
+                                Text(
+                                  "Language",
+                                  style: TextStyle(
+                                    color: colors.text,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                            const SizedBox(height: 24),
 
-                  const SizedBox(height: 32),
-
-                  // Developers Section
-                  FadeIn(
-                    delay: 500,
-                    child: Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.03),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.1),
+                            // Language Options
+                            Obx(
+                              () => Row(
+                                children: [
+                                  _buildLanguageOption(
+                                    context,
+                                    "English",
+                                    "en",
+                                    controller.currentStartLang.value == 'en',
+                                  ),
+                                  const SizedBox(width: 16),
+                                  _buildLanguageOption(
+                                    context,
+                                    "العربية",
+                                    "ar",
+                                    controller.currentStartLang.value == 'ar',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
-                            children: [
-                              Icon(
-                                Icons.code_rounded,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              SizedBox(width: 12),
-                              Text(
-                                "Developers",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Theme Section
+                    FadeIn(
+                      delay: 450,
+                      child: Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: colors.text.withOpacity(0.03),
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: colors.text.withOpacity(0.1),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.palette_outlined,
+                                  color: colors.text,
+                                  size: 24,
                                 ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  "App Appearance",
+                                  style: TextStyle(
+                                    color: colors.text,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            Obx(
+                              () => Row(
+                                children: [
+                                  _buildThemeOption(
+                                    context,
+                                    "Light",
+                                    Icons.wb_sunny_rounded,
+                                    !controller.isDarkMode.value,
+                                    () => controller.toggleTheme(),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  _buildThemeOption(
+                                    context,
+                                    "Dark",
+                                    Icons.nightlight_round,
+                                    controller.isDarkMode.value,
+                                    () => controller.toggleTheme(),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          _buildDevTile(
-                            "Ziad Ehab",
-                            "@iziadehap",
-                            () => controller.launchInstagram("iziadehap"),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 12),
-                            child: Divider(color: Colors.white10),
-                          ),
-                          _buildDevTile(
-                            "Bassem Tarek",
-                            "@ibassemtarek",
-                            () => controller.launchInstagram("ibassemtarek"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // App Info Placeholder
-                  FadeIn(
-                    delay: 600,
-                    child: Center(
-                      child: Text(
-                        "Version 1.0.0",
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.3),
-                          fontSize: 12,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+
+                    const SizedBox(height: 32),
+
+                    // Developers Section
+                    FadeIn(
+                      delay: 500,
+                      child: Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: colors.text.withOpacity(0.03),
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: colors.text.withOpacity(0.1),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.code_rounded,
+                                  color: colors.text,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  "Developers",
+                                  style: TextStyle(
+                                    color: colors.text,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            _buildDevTile(
+                              context,
+                              "Ziad Ehab",
+                              "@iziadehap",
+                              () => controller.launchInstagram("iziadehap"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Divider(
+                                color: colors.text.withOpacity(0.1),
+                              ),
+                            ),
+                            _buildDevTile(
+                              context,
+                              "Bassem Tarek",
+                              "@ibassemtarek",
+                              () => controller.launchInstagram("ibassemtarek"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // App Info Placeholder
+                    FadeIn(
+                      delay: 600,
+                      child: Center(
+                        child: Text(
+                          "Version 1.0.0",
+                          style: TextStyle(
+                            color: colors.text.withOpacity(0.3),
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -227,7 +300,13 @@ class SettingsPage extends GetView<SettingsController> {
     );
   }
 
-  Widget _buildDevTile(String name, String handle, VoidCallback onTap) {
+  Widget _buildDevTile(
+    BuildContext context,
+    String name,
+    String handle,
+    VoidCallback onTap,
+  ) {
+    final colors = AppThemeColors.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Row(
@@ -251,28 +330,75 @@ class SettingsPage extends GetView<SettingsController> {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: colors.text,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   handle,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.5),
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: colors.subtext, fontSize: 14),
                 ),
               ],
             ),
           ),
-          Icon(
-            Icons.open_in_new_rounded,
-            color: Colors.white.withOpacity(0.2),
-            size: 18,
-          ),
+          Icon(Icons.open_in_new_rounded, color: colors.border, size: 18),
         ],
+      ),
+    );
+  }
+
+  Widget _buildThemeOption(
+    BuildContext context,
+    String label,
+    IconData icon,
+    bool isSelected,
+    VoidCallback onTap,
+  ) {
+    final colors = AppThemeColors.of(context);
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            color: isSelected ? colors.text : colors.text.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected ? Colors.transparent : Colors.transparent,
+            ),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: colors.text.withOpacity(0.2),
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                    ),
+                  ]
+                : [],
+          ),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? colors.background : colors.text,
+                size: 20,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isSelected ? colors.background : colors.text,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -283,6 +409,8 @@ class SettingsPage extends GetView<SettingsController> {
     String code,
     bool isSelected,
   ) {
+    final colors = AppThemeColors.of(context);
+
     return Expanded(
       child: GestureDetector(
         onTap: () => controller.changeLanguage(code),
@@ -290,15 +418,15 @@ class SettingsPage extends GetView<SettingsController> {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.05),
+            color: isSelected ? colors.text : colors.text.withOpacity(0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isSelected ? Colors.white : Colors.transparent,
+              color: isSelected ? colors.text : Colors.transparent,
             ),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: Colors.white.withOpacity(0.2),
+                      color: colors.text.withOpacity(0.2),
                       blurRadius: 15,
                       spreadRadius: 2,
                     ),
@@ -309,7 +437,7 @@ class SettingsPage extends GetView<SettingsController> {
             child: Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.black : Colors.white,
+                color: isSelected ? colors.background : colors.text,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),

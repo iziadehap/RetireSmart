@@ -2,14 +2,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:retiresmart/RetireSmart/domain/usecases/retirement_delete_cash.dart';
-import 'package:retiresmart/RetireSmart/presentation/widgets/retire_widgets.dart';
+import 'package:retiresmart/RetireSmart/presentation/widgets/common_painters.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
-void showRetirementDialog({
-  required BuildContext context,
-  required Color accent,
-}) {
+void showRetirementDialog({required BuildContext context, Color? accent}) {
   final s = AppLocalizations.of(context)!;
+  final colors = AppThemeColors.of(context);
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+  final effectiveAccent = accent ?? colors.accentCyan;
 
   Get.dialog(
     BackdropFilter(
@@ -26,14 +27,14 @@ void showRetirementDialog({
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  accent.withOpacity(0.3),
-                  Colors.white.withOpacity(0.05),
+                  effectiveAccent.withOpacity(0.3),
+                  colors.text.withOpacity(0.05),
                 ],
               ),
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1117).withOpacity(0.9),
+                color: colors.card.withOpacity(isDark ? 0.9 : 0.95),
                 borderRadius: BorderRadius.circular(22),
               ),
               clipBehavior: Clip.antiAlias,
@@ -48,10 +49,10 @@ void showRetirementDialog({
                       height: 150,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: accent.withOpacity(0.1),
+                        color: effectiveAccent.withOpacity(0.1),
                         boxShadow: [
                           BoxShadow(
-                            color: accent.withOpacity(0.1),
+                            color: effectiveAccent.withOpacity(0.1),
                             blurRadius: 40,
                             spreadRadius: 20,
                           ),
@@ -64,9 +65,9 @@ void showRetirementDialog({
                   Positioned.fill(
                     child: CustomPaint(
                       painter: DotGridPainter(
-                        color: Colors.white,
+                        color: colors.text,
                         spacing: 30,
-                        opacity: 0.03,
+                        opacity: isDark ? 0.03 : 0.06,
                       ),
                     ),
                   ),
@@ -80,13 +81,15 @@ void showRetirementDialog({
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: accent.withOpacity(0.1),
+                            color: effectiveAccent.withOpacity(0.1),
                             shape: BoxShape.circle,
-                            border: Border.all(color: accent.withOpacity(0.2)),
+                            border: Border.all(
+                              color: effectiveAccent.withOpacity(0.2),
+                            ),
                           ),
                           child: Icon(
                             Icons.refresh_rounded,
-                            color: accent,
+                            color: effectiveAccent,
                             size: 32,
                           ),
                         ),
@@ -96,8 +99,8 @@ void showRetirementDialog({
                         Text(
                           s.recalculate.toUpperCase(),
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: colors.text,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1,
@@ -110,7 +113,7 @@ void showRetirementDialog({
                           s.resetConfirmation,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
+                            color: colors.subtext,
                             fontSize: 14,
                             height: 1.5,
                           ),
@@ -122,6 +125,7 @@ void showRetirementDialog({
                           children: [
                             Expanded(
                               child: _buildDialogButton(
+                                context: context,
                                 label: s.noCancel,
                                 isPrimary: false,
                                 onTap: () {
@@ -132,9 +136,10 @@ void showRetirementDialog({
                             const SizedBox(width: 16),
                             Expanded(
                               child: _buildDialogButton(
+                                context: context,
                                 label: s.yesReset,
                                 isPrimary: true,
-                                accent: accent,
+                                accent: effectiveAccent,
                                 onTap: () {
                                   try {
                                     RetirementDeleteCash().call();
@@ -169,11 +174,15 @@ void showRetirementDialog({
 }
 
 Widget _buildDialogButton({
+  required BuildContext context,
   required String label,
   required bool isPrimary,
   Color? accent,
   required VoidCallback onTap,
 }) {
+  final colors = AppThemeColors.of(context);
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+
   return GestureDetector(
     onTap: onTap,
     child: Container(
@@ -183,10 +192,10 @@ Widget _buildDialogButton({
         gradient: isPrimary && accent != null
             ? LinearGradient(colors: [accent, accent.withOpacity(0.8)])
             : null,
-        color: isPrimary ? null : Colors.white.withOpacity(0.05),
+        color: isPrimary ? null : colors.text.withOpacity(0.05),
         border: isPrimary
             ? null
-            : Border.all(color: Colors.white.withOpacity(0.1)),
+            : Border.all(color: colors.text.withOpacity(0.1)),
         boxShadow: isPrimary && accent != null
             ? [
                 BoxShadow(
@@ -201,7 +210,9 @@ Widget _buildDialogButton({
       child: Text(
         label,
         style: TextStyle(
-          color: isPrimary ? Colors.black : Colors.white70,
+          color: isPrimary
+              ? (isDark ? Colors.black : Colors.white)
+              : colors.subtext,
           fontWeight: FontWeight.bold,
           fontSize: 14,
         ),

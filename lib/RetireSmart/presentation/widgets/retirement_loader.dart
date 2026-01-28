@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
-import 'retire_widgets.dart';
+import 'package:retiresmart/core/app_colors.dart';
+import 'common_painters.dart';
 
 class RetirementLoader extends StatelessWidget {
   const RetirementLoader({super.key});
@@ -8,6 +9,9 @@ class RetirementLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Stack(
       children: [
         // Ambient Glow
@@ -19,10 +23,10 @@ class RetirementLoader extends StatelessWidget {
             height: 300,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF00F5FF).withOpacity(0.05),
+              color: colors.accentCyan.withOpacity(0.05),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00F5FF).withOpacity(0.05),
+                  color: colors.accentCyan.withOpacity(0.05),
                   blurRadius: 100,
                   spreadRadius: 50,
                 ),
@@ -35,9 +39,9 @@ class RetirementLoader extends StatelessWidget {
         Positioned.fill(
           child: CustomPaint(
             painter: DotGridPainter(
-              color: Colors.white,
+              color: colors.text,
               spacing: 40,
-              opacity: 0.03,
+              opacity: isDark ? 0.03 : 0.05,
             ),
           ),
         ),
@@ -59,12 +63,12 @@ class RetirementLoader extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: const Color(0xFF00F5FF).withOpacity(0.3),
+                          color: colors.accentCyan.withOpacity(0.3),
                           width: 2,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFF00F5FF).withOpacity(0.1),
+                            color: colors.accentCyan.withOpacity(0.1),
                             blurRadius: 20,
                             spreadRadius: 2,
                           ),
@@ -79,7 +83,7 @@ class RetirementLoader extends StatelessWidget {
                             height: 60,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: const Color(0xFF00F5FF).withOpacity(0.1),
+                              color: colors.accentCyan.withOpacity(0.1),
                             ),
                           ),
                           // Spinning indicator
@@ -89,8 +93,8 @@ class RetirementLoader extends StatelessWidget {
                               width: 8,
                               height: 8,
                               margin: const EdgeInsets.only(top: 10),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF00F5FF),
+                              decoration: BoxDecoration(
+                                color: colors.accentCyan,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -108,8 +112,8 @@ class RetirementLoader extends StatelessWidget {
               // Text
               Text(
                 s.analyzingLabel.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: colors.text,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2,
@@ -119,7 +123,7 @@ class RetirementLoader extends StatelessWidget {
               Text(
                 "Processing...",
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.4),
+                  color: colors.subtext,
                   fontSize: 12,
                   letterSpacing: 0.5,
                 ),

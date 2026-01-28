@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
 import '../controller/gold_controller.dart';
 import '../../data/models/gold_price_failure_model.dart';
 
@@ -8,12 +9,12 @@ class GoldFailureWidget extends StatelessWidget {
   final FailureType type;
   const GoldFailureWidget({super.key, required this.type});
 
-
-
   @override
   Widget build(BuildContext context) {
-      final s = AppLocalizations.of(context)!;
+    final s = AppLocalizations.of(context)!;
     final GoldController controller = Get.find<GoldController>();
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     IconData icon;
     String title;
@@ -24,15 +25,13 @@ class GoldFailureWidget extends StatelessWidget {
       case FailureType.internetError:
         icon = Icons.signal_wifi_off_rounded;
         title = s.connectionLost;
-        message =
-            s.couldntReachTheGoldServers;
+        message = s.couldntReachTheGoldServers;
         accentColor = Colors.redAccent;
         break;
       case FailureType.requestError:
         icon = Icons.cloud_off_rounded;
         title = s.serverError;
-        message =
-            s.problemWithTheRequest;
+        message = s.problemWithTheRequest;
         accentColor = Colors.orangeAccent;
         break;
       case FailureType.cashError:
@@ -48,9 +47,9 @@ class GoldFailureWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 32),
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
+          color: colors.text.withOpacity(0.05),
           borderRadius: BorderRadius.circular(32),
-          border: Border.all(color: Colors.white.withOpacity(0.1)),
+          border: Border.all(color: colors.text.withOpacity(0.1)),
           boxShadow: [
             BoxShadow(
               color: accentColor.withOpacity(0.05),
@@ -86,8 +85,8 @@ class GoldFailureWidget extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               title,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: colors.text,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
@@ -98,7 +97,7 @@ class GoldFailureWidget extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
+                color: colors.subtext,
                 fontSize: 14,
                 height: 1.5,
               ),
@@ -138,12 +137,16 @@ class GoldFailureWidget extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(iconData, color: Colors.white, size: 20),
+                      Icon(
+                        iconData,
+                        color: isDark ? Colors.black : Colors.white,
+                        size: 20,
+                      ),
                       const SizedBox(width: 12),
                       Text(
                         buttonText,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: isDark ? Colors.black : Colors.white,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1.2,
                         ),

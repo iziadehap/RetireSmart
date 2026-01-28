@@ -6,7 +6,7 @@ class DotGridPainter extends CustomPainter {
   final double spacing;
   final double opacity;
   DotGridPainter({
-    this.color = Colors.white,
+    required this.color,
     this.spacing = 30.0,
     this.opacity = 0.05,
   });
@@ -29,16 +29,23 @@ class DotGridPainter extends CustomPainter {
 class InflationChartPainter extends CustomPainter {
   final List<Estimate> estimates;
   final Color lineColor;
+  final Color gridColor;
+  final Color dotStrokeColor;
 
-  InflationChartPainter({required this.estimates, required this.lineColor});
+  InflationChartPainter({
+    required this.estimates,
+    required this.lineColor,
+    this.gridColor = Colors.white,
+    this.dotStrokeColor = const Color(0xFF0A0A0A),
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     if (estimates.length < 2) return;
 
-    // --- Background Grid/Lines (Subtle 2026 style) ---
+    // --- Background Grid/Lines ---
     final gridPaint = Paint()
-      ..color = Colors.white.withOpacity(0.05)
+      ..color = gridColor.withOpacity(0.05)
       ..strokeWidth = 0.5;
 
     for (int i = 0; i <= 4; i++) {
@@ -96,7 +103,7 @@ class InflationChartPainter extends CustomPainter {
     fillPath.lineTo(size.width, size.height);
     fillPath.close();
 
-    // --- Layer 1: Fill Gradient (Area under line) ---
+    // --- Layer 1: Fill Gradient ---
     final fillGradient = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
@@ -115,7 +122,7 @@ class InflationChartPainter extends CustomPainter {
         ),
     );
 
-    // --- Layer 2: Outer Glow (Shadow) ---
+    // --- Layer 2: Outer Glow ---
     final glowPaint = Paint()
       ..color = lineColor.withOpacity(0.5)
       ..style = PaintingStyle.stroke
@@ -130,7 +137,6 @@ class InflationChartPainter extends CustomPainter {
       ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round;
 
-    // Gradient along the line (Subtle fade at ends)
     final lineGradient = LinearGradient(
       colors: [
         lineColor.withOpacity(0.5),
@@ -147,20 +153,17 @@ class InflationChartPainter extends CustomPainter {
     final dotStroke = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
-      ..color = const Color(0xFF0A0A0A);
+      ..color = dotStrokeColor;
 
     for (int i = 0; i < points.length; i++) {
-      // Logic to only draw significant points to keep it clean
       if (i == 0 ||
           i == (maxX).round() ||
           (maxX > 4 && (i % (maxX / 4).round()) == 0)) {
-        // Outer Halo for point
         canvas.drawCircle(
           points[i],
           6,
           Paint()..color = lineColor.withOpacity(0.2),
         );
-        // Main Dot
         dotPaint.color = lineColor;
         canvas.drawCircle(points[i], 3, dotPaint);
         canvas.drawCircle(points[i], 3, dotStroke);

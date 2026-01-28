@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
+import 'package:retiresmart/RetireSmart/presentation/widgets/common_painters.dart';
 import '../controller/onboarding_controller.dart';
 
 class OnboardingPage extends GetView<OnboardingController> {
@@ -9,9 +11,11 @@ class OnboardingPage extends GetView<OnboardingController> {
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0A0A),
+      backgroundColor: colors.background,
       body: Stack(
         children: [
           // Ambient Glow
@@ -23,10 +27,10 @@ class OnboardingPage extends GetView<OnboardingController> {
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF00F5FF).withOpacity(0.05),
+                color: colors.accentCyan.withOpacity(0.05),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF00F5FF).withOpacity(0.05),
+                    color: colors.accentCyan.withOpacity(0.05),
                     blurRadius: 100,
                     spreadRadius: 50,
                   ),
@@ -39,9 +43,9 @@ class OnboardingPage extends GetView<OnboardingController> {
           Positioned.fill(
             child: CustomPaint(
               painter: DotGridPainter(
-                color: Colors.white,
+                color: colors.text,
                 spacing: 40,
-                opacity: 0.03,
+                opacity: isDark ? 0.02 : 0.04,
               ),
             ),
           ),
@@ -55,7 +59,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                     onPressed: controller.skip,
                     child: Text(
                       s.skip,
-                      style: const TextStyle(color: Colors.grey),
+                      style: TextStyle(color: colors.subtext),
                     ),
                   ),
                 ),
@@ -69,21 +73,21 @@ class OnboardingPage extends GetView<OnboardingController> {
                         title: s.onboardingTitle1,
                         description: s.onboardingDesc1,
                         icon: Icons.rocket_launch_outlined,
-                        color: const Color(0xFF00F5FF),
+                        color: colors.accentCyan,
                       ),
                       _buildPage(
                         context,
                         title: s.onboardingTitle2,
                         description: s.onboardingDesc2,
                         icon: Icons.monetization_on_outlined,
-                        color: const Color(0xFFF2B90D),
+                        color: colors.primaryGold,
                       ),
                       _buildPage(
                         context,
                         title: s.onboardingTitle3,
                         description: s.onboardingDesc3,
                         icon: Icons.language_outlined,
-                        color: Colors.white,
+                        color: colors.text,
                       ),
                     ],
                   ),
@@ -109,9 +113,20 @@ class OnboardingPage extends GetView<OnboardingController> {
                               width: isActive ? 24 : 8,
                               decoration: BoxDecoration(
                                 color: isActive
-                                    ? const Color(0xFF00F5FF)
-                                    : Colors.white.withOpacity(0.2),
+                                    ? colors.accentCyan
+                                    : colors.text.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(4),
+                                boxShadow: isActive
+                                    ? [
+                                        BoxShadow(
+                                          color: colors.accentCyan.withOpacity(
+                                            0.3,
+                                          ),
+                                          blurRadius: 8,
+                                          spreadRadius: 1,
+                                        ),
+                                      ]
+                                    : [],
                               ),
                             );
                           });
@@ -124,8 +139,10 @@ class OnboardingPage extends GetView<OnboardingController> {
                         return ElevatedButton(
                           onPressed: controller.next,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00F5FF),
-                            foregroundColor: Colors.black,
+                            backgroundColor: colors.accentCyan,
+                            foregroundColor: isDark
+                                ? Colors.black
+                                : Colors.white,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32,
                               vertical: 16,
@@ -133,6 +150,8 @@ class OnboardingPage extends GetView<OnboardingController> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
+                            elevation: 8,
+                            shadowColor: colors.accentCyan.withOpacity(0.4),
                           ),
                           child: Text(
                             isLastPage ? s.getStarted : s.nextButton,
@@ -158,6 +177,7 @@ class OnboardingPage extends GetView<OnboardingController> {
     required IconData icon,
     required Color color,
   }) {
+    final colors = AppThemeColors.of(context);
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Column(
@@ -176,8 +196,8 @@ class OnboardingPage extends GetView<OnboardingController> {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: colors.text,
               fontSize: 32,
               fontWeight: FontWeight.w900,
               letterSpacing: -0.5,
@@ -187,42 +207,10 @@ class OnboardingPage extends GetView<OnboardingController> {
           Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 16,
-              height: 1.5,
-            ),
+            style: TextStyle(color: colors.subtext, fontSize: 16, height: 1.5),
           ),
         ],
       ),
     );
   }
-}
-
-class DotGridPainter extends CustomPainter {
-  final Color color;
-  final double spacing;
-  final double opacity;
-
-  DotGridPainter({
-    this.color = Colors.white,
-    this.spacing = 30.0,
-    this.opacity = 0.05,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = color.withOpacity(opacity)
-      ..style = PaintingStyle.fill;
-    const double dotRadius = 1.0;
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x, y), dotRadius, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

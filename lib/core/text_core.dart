@@ -7,5 +7,4 @@ class TextCore {
   static const String retirementResultKey = "retirement_result";
   static const String lanKey = 'lan';
   static const String lan = 'en';
-  static const String themeKey = 'is_dark_mode';
 }

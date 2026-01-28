@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retiresmart/GoldPrice/data/models/gold_price_model.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
 class GoldMainPriceCard extends StatelessWidget {
   final GoldPriceModel data;
@@ -17,20 +18,21 @@ class GoldMainPriceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final price = data.gold24k.buy;
+    final colors = AppThemeColors.of(context);
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFD700), Color(0xFFFFA000)], // Gold Gradient
+        gradient: LinearGradient(
+          colors: [colors.primaryGold, colors.primaryGold.withOpacity(0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFFFA000).withOpacity(0.3),
+            color: colors.primaryGold.withOpacity(0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -56,9 +58,7 @@ class GoldMainPriceCard extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: isFromCash
-                      ? Colors.black.withOpacity(0.05)
-                      : Colors.black.withOpacity(0.1),
+                  color: Colors.black.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(

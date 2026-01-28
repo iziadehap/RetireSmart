@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
 class ModernMenuCard extends StatefulWidget {
   final String title;
@@ -49,6 +50,8 @@ class _ModernMenuCardState extends State<ModernMenuCard>
 
   @override
   Widget build(BuildContext context) {
+        final colors = AppThemeColors.of(context);
+
     return GestureDetector(
       onTapDown: (_) {
         setState(() => _isPressed = true);
@@ -158,7 +161,7 @@ class _ModernMenuCardState extends State<ModernMenuCard>
                                 Text(
                                   widget.title,
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    // color: Colors.white,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
@@ -169,7 +172,7 @@ class _ModernMenuCardState extends State<ModernMenuCard>
                                   Text(
                                     widget.subtitle,
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.6),
+                                      color: colors.subtext.withOpacity(0.6),
                                       fontSize: 13,
                                       height: 1.4,
                                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
 import '../controller/goal_selection_controller.dart';
 import '../widgets/modern_menu_card.dart';
 
@@ -10,8 +11,11 @@ class GoalSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0A0A), // Extremely dark background
+      backgroundColor: colors.background,
       body: Stack(
         children: [
           // Ambient Background Light
@@ -23,10 +27,10 @@ class GoalSelectionPage extends StatelessWidget {
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFFF2B90D).withOpacity(0.05),
+                color: colors.primaryGold.withOpacity(0.05),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFF2B90D).withOpacity(0.05),
+                    color: colors.primaryGold.withOpacity(0.05),
                     blurRadius: 100,
                     spreadRadius: 50,
                   ),
@@ -39,9 +43,9 @@ class GoalSelectionPage extends StatelessWidget {
           Positioned.fill(
             child: CustomPaint(
               painter: DotGridPainter(
-                color: Colors.white,
+                color: colors.text,
                 spacing: 40,
-                opacity: 0.03, // Subtle dotted pattern
+                opacity: isDark ? 0.03 : 0.05,
               ),
             ),
           ),
@@ -62,16 +66,16 @@ class GoalSelectionPage extends StatelessWidget {
                         Text(
                           s.welcomeBack,
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: colors.subtext,
                             fontSize: 16,
                             letterSpacing: 1.2,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           "RetireSmart",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: colors.text,
                             fontSize: 32,
                             fontWeight: FontWeight.w900,
                             letterSpacing: -1,
@@ -97,36 +101,30 @@ class GoalSelectionPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                const Color(0xFF00F5FF).withOpacity(0.1),
+                                colors.accentCyan.withOpacity(0.1),
                                 Colors.transparent,
                               ],
                             ),
                             borderRadius: BorderRadius.circular(24),
                             border: Border.all(
-                              color: const Color(0xFF00F5FF).withOpacity(0.2),
+                              color: colors.accentCyan.withOpacity(0.2),
                             ),
                           ),
                           child: InkWell(
                             onTap: () {
-                              Get.toNamed(
-                                '/retirement',
-                                // The RetirementWizard will automatically pick up the session
-                                // as we saw in its checkSavedSession()
-                              );
+                              Get.toNamed('/retirement');
                             },
                             child: Row(
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xFF00F5FF,
-                                    ).withOpacity(0.1),
+                                    color: colors.accentCyan.withOpacity(0.1),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.history_rounded,
-                                    color: Color(0xFF00F5FF),
+                                    color: colors.accentCyan,
                                     size: 24,
                                   ),
                                 ),
@@ -139,16 +137,16 @@ class GoalSelectionPage extends StatelessWidget {
                                       Text(
                                         "Recent Plan Found",
                                         style: TextStyle(
-                                          color: Colors.white.withOpacity(0.5),
+                                          color: colors.subtext,
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       const SizedBox(height: 4),
-                                      const Text(
+                                      Text(
                                         "Click to resume your retirement blueprint",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: colors.text,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -156,9 +154,9 @@ class GoalSelectionPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                const Icon(
+                                Icon(
                                   Icons.arrow_forward_ios_rounded,
-                                  color: Colors.white30,
+                                  color: colors.border,
                                   size: 16,
                                 ),
                               ],
@@ -178,7 +176,7 @@ class GoalSelectionPage extends StatelessWidget {
                       title: s.goldInvestment,
                       subtitle: s.goldInvestmentDesc,
                       icon: Icons.monetization_on_outlined,
-                      accentColor: const Color(0xFFF2B90D), // Gold
+                      accentColor: colors.primaryGold,
                       onTap: () => Get.toNamed('/gold'),
                     ),
                   ),
@@ -190,7 +188,7 @@ class GoalSelectionPage extends StatelessWidget {
                       title: s.retirementPlanning,
                       subtitle: s.retirementPlanningDesc,
                       icon: Icons.rocket_launch_outlined,
-                      accentColor: const Color(0xFF00F5FF), // Cyan
+                      accentColor: colors.accentCyan,
                       onTap: () => Get.toNamed('/retirement'),
                     ),
                   ),
@@ -204,7 +202,7 @@ class GoalSelectionPage extends StatelessWidget {
                       title: s.settings,
                       subtitle: "",
                       icon: Icons.settings_outlined,
-                      accentColor: Colors.white,
+                      accentColor: colors.text,
                       isSettings: true,
                       onTap: () => Get.toNamed('/settings'),
                     ),

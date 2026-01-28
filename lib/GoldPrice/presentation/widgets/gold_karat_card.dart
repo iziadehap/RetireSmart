@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retiresmart/GoldPrice/data/models/gold_price_model.dart';
-import 'package:retiresmart/core/colors.dart';
+import 'package:retiresmart/core/app_colors.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 
 class GoldKaratCard extends StatelessWidget {
@@ -17,11 +17,13 @@ class GoldKaratCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppThemeColors.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: colors.text.withOpacity(0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: colors.text.withOpacity(0.1)),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -36,12 +38,12 @@ class GoldKaratCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
-                  color: accent,
+                  color: colors.primaryGold,
                 ),
               ),
               Icon(
                 Icons.monetization_on_outlined,
-                color: Colors.white.withOpacity(0.3),
+                color: colors.text.withOpacity(0.3),
                 size: 20,
               ),
             ],
@@ -49,10 +51,10 @@ class GoldKaratCard extends StatelessWidget {
           const Spacer(),
           Text(
             "${s.buy}: ${priceDetails.buy.toStringAsFixed(0)}",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: colors.text,
             ),
           ),
           Text(
@@ -60,7 +62,7 @@ class GoldKaratCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.normal,
-              color: Colors.white.withOpacity(0.6),
+              color: colors.subtext,
             ),
           ),
         ],

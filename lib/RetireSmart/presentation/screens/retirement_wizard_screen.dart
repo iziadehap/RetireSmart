@@ -5,7 +5,9 @@ import '../controllers/retirement_controller.dart';
 import '../../domain/entities/retirement_entities.dart';
 import '../widgets/retirement_loader.dart';
 import '../widgets/retire_widgets.dart';
+import '../widgets/common_painters.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import 'package:retiresmart/core/app_colors.dart';
 
 class RetirementWizardScreen extends StatelessWidget {
   const RetirementWizardScreen({super.key});
@@ -15,10 +17,12 @@ class RetirementWizardScreen extends StatelessWidget {
     // Inject Controller
     final RetirementController controller = Get.put(RetirementController());
     final s = AppLocalizations.of(context)!;
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xFF0A0A0A),
+      backgroundColor: colors.background,
       body: Obx(() {
         if (controller.isLoading.value) {
           return const RetirementLoader();
@@ -37,10 +41,10 @@ class RetirementWizardScreen extends StatelessWidget {
                       height: 300,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: const Color(0xFF00F5FF).withOpacity(0.05),
+                        color: colors.accentCyan.withOpacity(0.05),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFF00F5FF).withOpacity(0.05),
+                            color: colors.accentCyan.withOpacity(0.05),
                             blurRadius: 100,
                             spreadRadius: 50,
                           ),
@@ -51,9 +55,9 @@ class RetirementWizardScreen extends StatelessWidget {
                   Positioned.fill(
                     child: CustomPaint(
                       painter: DotGridPainter(
-                        color: Colors.white,
+                        color: colors.text,
                         spacing: 40,
-                        opacity: 0.03,
+                        opacity: isDark ? 0.03 : 0.05,
                       ),
                     ),
                   ),
@@ -77,15 +81,15 @@ class RetirementWizardScreen extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.05),
+                              color: colors.text.withOpacity(0.05),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.1),
+                                color: colors.text.withOpacity(0.1),
                               ),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.arrow_back_ios_new,
-                              color: Colors.white,
+                              color: colors.text,
                               size: 20,
                             ),
                           ),
@@ -93,8 +97,8 @@ class RetirementWizardScreen extends StatelessWidget {
                         const SizedBox(width: 20),
                         Text(
                           s.appTitle, // "Retirement Planner"
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: colors.text,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
@@ -121,15 +125,13 @@ class RetirementWizardScreen extends StatelessWidget {
                           height: 4,
                           decoration: BoxDecoration(
                             color: isActive
-                                ? const Color(0xFF00F5FF)
-                                : Colors.white.withOpacity(0.1),
+                                ? colors.accentCyan
+                                : colors.text.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(2),
                             boxShadow: isActive
                                 ? [
                                     BoxShadow(
-                                      color: const Color(
-                                        0xFF00F5FF,
-                                      ).withOpacity(0.5),
+                                      color: colors.accentCyan.withOpacity(0.5),
                                       blurRadius: 4,
                                     ),
                                   ]
@@ -145,10 +147,10 @@ class RetirementWizardScreen extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.03),
+                        color: colors.text.withOpacity(0.03),
                         borderRadius: BorderRadius.circular(32),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.08),
+                          color: colors.text.withOpacity(0.08),
                         ),
                       ),
                       child: ClipRRect(
@@ -159,22 +161,25 @@ class RetirementWizardScreen extends StatelessWidget {
                           children: [
                             _buildStepContent(
                               _buildStep1(
+                                context,
                                 controller,
-                                const Color(0xFF00F5FF),
+                                colors.accentCyan,
                                 s,
                               ),
                             ),
                             _buildStepContent(
                               _buildStep2(
+                                context,
                                 controller,
-                                const Color(0xFF00F5FF),
+                                colors.accentCyan,
                                 s,
                               ),
                             ),
                             _buildStepContent(
                               _buildStep3(
+                                context,
                                 controller,
-                                const Color(0xFF00F5FF),
+                                colors.accentCyan,
                                 s,
                               ),
                             ),
@@ -193,6 +198,7 @@ class RetirementWizardScreen extends StatelessWidget {
                           Expanded(
                             flex: 1,
                             child: _buildNavButton(
+                              context: context,
                               onTap: controller.previousStep,
                               label: s.backButton,
                               isPrimary: false,
@@ -205,6 +211,7 @@ class RetirementWizardScreen extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: _buildNavButton(
+                            context: context,
                             onTap: controller.nextStep,
                             label:
                                 controller.currentStep.value ==
@@ -273,10 +280,14 @@ class RetirementWizardScreen extends StatelessWidget {
   }
 
   Widget _buildNavButton({
+    required BuildContext context,
     required VoidCallback onTap,
     required String label,
     required bool isPrimary,
   }) {
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -284,18 +295,21 @@ class RetirementWizardScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           gradient: isPrimary
-              ? const LinearGradient(
-                  colors: [Color(0xFF00F5FF), Color(0xFF00E0E6)],
+              ? LinearGradient(
+                  colors: [
+                    colors.accentCyan,
+                    colors.accentCyan.withOpacity(0.8),
+                  ],
                 )
               : null,
-          color: isPrimary ? null : Colors.white.withOpacity(0.05),
+          color: isPrimary ? null : colors.text.withOpacity(0.05),
           border: isPrimary
               ? null
-              : Border.all(color: Colors.white.withOpacity(0.1)),
+              : Border.all(color: colors.text.withOpacity(0.1)),
           boxShadow: isPrimary
               ? [
                   BoxShadow(
-                    color: const Color(0xFF00F5FF).withOpacity(0.3),
+                    color: colors.accentCyan.withOpacity(0.3),
                     blurRadius: 15,
                     spreadRadius: -2,
                     offset: const Offset(0, 4),
@@ -307,7 +321,9 @@ class RetirementWizardScreen extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: isPrimary ? Colors.black : Colors.white,
+            color: isPrimary
+                ? (isDark ? Colors.black : Colors.white)
+                : colors.text,
             fontWeight: FontWeight.bold,
             fontSize: 16,
             letterSpacing: 0.5,
@@ -318,23 +334,21 @@ class RetirementWizardScreen extends StatelessWidget {
   }
 
   Widget _buildStep1(
+    BuildContext context,
     RetirementController controller,
     Color accent,
     AppLocalizations s,
   ) {
+    final colors = AppThemeColors.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(
-          Icons.person_pin_circle_outlined,
-          color: Color(0xFF00F5FF),
-          size: 48,
-        ),
+        Icon(Icons.person_pin_circle_outlined, color: accent, size: 48),
         const SizedBox(height: 16),
         Text(
           s.step1Title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: colors.text,
             fontSize: 28,
             fontWeight: FontWeight.bold,
             height: 1.1,
@@ -342,6 +356,7 @@ class RetirementWizardScreen extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         _buildModernTextField(
+          context: context,
           controller: controller.ageController,
           label: s.currentAgeLabel,
           icon: Icons.cake_outlined,
@@ -349,6 +364,7 @@ class RetirementWizardScreen extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         _buildModernTextField(
+          context: context,
           controller: controller.retirementAgeController,
           label: s.targetRetirementAgeLabel,
           icon: Icons.flag_outlined,
@@ -359,23 +375,21 @@ class RetirementWizardScreen extends StatelessWidget {
   }
 
   Widget _buildStep2(
+    BuildContext context,
     RetirementController controller,
     Color accent,
     AppLocalizations s,
   ) {
+    final colors = AppThemeColors.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(
-          Icons.account_balance_wallet_outlined,
-          color: Color(0xFF00F5FF),
-          size: 48,
-        ),
+        Icon(Icons.account_balance_wallet_outlined, color: accent, size: 48),
         const SizedBox(height: 16),
         Text(
           s.incomeExpensesTitle,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: colors.text,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
@@ -383,10 +397,11 @@ class RetirementWizardScreen extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           s.gapDescription,
-          style: TextStyle(color: Colors.white.withOpacity(0.6), height: 1.4),
+          style: TextStyle(color: colors.subtext, height: 1.4),
         ),
         const SizedBox(height: 30),
         _buildModernTextField(
+          context: context,
           controller: controller.mainIncomeController,
           label: s.monthlyIncomeLabel,
           icon: Icons.attach_money,
@@ -394,6 +409,7 @@ class RetirementWizardScreen extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         _buildModernTextField(
+          context: context,
           controller: controller.additionalIncomeController,
           label: s.additionalIncomeLabel,
           icon: Icons.add_circle_outline,
@@ -401,6 +417,7 @@ class RetirementWizardScreen extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         _buildModernTextField(
+          context: context,
           controller: controller.expensesController,
           label: s.monthlyExpensesLabel,
           icon: Icons.money_off_outlined,
@@ -411,25 +428,28 @@ class RetirementWizardScreen extends StatelessWidget {
   }
 
   Widget _buildStep3(
+    BuildContext context,
     RetirementController controller,
     Color accent,
     AppLocalizations s,
   ) {
+    final colors = AppThemeColors.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.query_stats, color: Color(0xFF00F5FF), size: 48),
+        Icon(Icons.query_stats, color: accent, size: 48),
         const SizedBox(height: 16),
         Text(
           s.assetsStrategyTitle,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: colors.text,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 30),
         _buildModernTextField(
+          context: context,
           controller: controller.savingsController,
           label: s.currentSavingsLabel,
           icon: Icons.savings_outlined,
@@ -443,7 +463,7 @@ class RetirementWizardScreen extends StatelessWidget {
             Text(
               s.riskAppetiteLabel,
               style: TextStyle(
-                color: Colors.grey[400],
+                color: colors.subtext,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1,
@@ -453,11 +473,12 @@ class RetirementWizardScreen extends StatelessWidget {
               onTap: () => Get.toNamed('/riskQuiz'),
               child: Text(
                 s.riskQuizPrompt,
-                style: const TextStyle(
-                  color: Color(0xFF00F5FF),
+                style: TextStyle(
+                  color: accent,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                   decoration: TextDecoration.underline,
+                  decorationColor: accent,
                 ),
               ),
             ),
@@ -468,19 +489,19 @@ class RetirementWizardScreen extends StatelessWidget {
         Obx(
           () => Container(
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.3),
+              color: colors.text.withOpacity(0.03),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.white.withOpacity(0.1)),
+              border: Border.all(color: colors.text.withOpacity(0.1)),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<RiskLevel>(
                 value: controller.selectedRiskLevel.value,
-                dropdownColor: const Color(0xFF1A1A1A),
+                dropdownColor: colors.background,
                 icon: Icon(Icons.keyboard_arrow_down, color: accent),
                 isExpanded: true,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: colors.text,
                   fontSize: 16,
                   fontFamily: 'Roboto',
                 ),
@@ -552,18 +573,20 @@ class RetirementWizardScreen extends StatelessWidget {
   }
 
   Widget _buildModernTextField({
+    required BuildContext context,
     required TextEditingController controller,
     required String label,
     required IconData icon,
     required Color accent,
   }) {
+    final colors = AppThemeColors.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label.toUpperCase(),
           style: TextStyle(
-            color: Colors.white.withOpacity(0.5),
+            color: colors.subtext,
             fontSize: 11,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.5,
@@ -572,12 +595,12 @@ class RetirementWizardScreen extends StatelessWidget {
         const SizedBox(height: 8),
         TextField(
           controller: controller,
-          style: const TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: colors.text, fontSize: 16),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [ThousandsSeparatorInputFormatter()],
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.black.withOpacity(0.3),
+            fillColor: colors.text.withOpacity(0.03),
             prefixIcon: Icon(icon, color: accent.withOpacity(0.7)),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
@@ -593,7 +616,7 @@ class RetirementWizardScreen extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+              borderSide: BorderSide(color: colors.text.withOpacity(0.1)),
             ),
           ),
         ),

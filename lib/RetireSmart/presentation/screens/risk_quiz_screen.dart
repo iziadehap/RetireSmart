@@ -3,7 +3,8 @@ import 'package:get_x/get.dart';
 import 'package:retiresmart/RetireSmart/domain/entities/retirement_entities.dart';
 import '../../../l10n/app_localizations.dart';
 import '../controllers/risk_quiz_controller.dart';
-import '../widgets/fade_in_animation.dart';
+import '../widgets/retire_widgets.dart'; // Using the shared FadeIn from retire_widgets
+import 'package:retiresmart/core/app_colors.dart';
 
 class RiskQuizScreen extends StatelessWidget {
   const RiskQuizScreen({super.key});
@@ -12,11 +13,10 @@ class RiskQuizScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(RiskQuizController());
     final s = AppLocalizations.of(context)!;
-    const Color accent = Color(0xFF00F5FF);
-    const Color bg = Color(0xFF0A0A0A);
+    final colors = AppThemeColors.of(context);
 
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: colors.background,
       body: Stack(
         children: [
           // Ambient Glow
@@ -28,10 +28,10 @@ class RiskQuizScreen extends StatelessWidget {
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: accent.withOpacity(0.05),
+                color: colors.accentCyan.withOpacity(0.05),
                 boxShadow: [
                   BoxShadow(
-                    color: accent.withOpacity(0.05),
+                    color: colors.accentCyan.withOpacity(0.05),
                     blurRadius: 100,
                     spreadRadius: 50,
                   ),
@@ -54,12 +54,15 @@ class RiskQuizScreen extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.05),
+                              color: colors.text.withOpacity(0.05),
                               borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: colors.text.withOpacity(0.1),
+                              ),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.close,
-                              color: Colors.white,
+                              color: colors.text,
                               size: 20,
                             ),
                           ),
@@ -67,8 +70,8 @@ class RiskQuizScreen extends StatelessWidget {
                         const SizedBox(width: 20),
                         Text(
                           s.riskQuizTitle.toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: colors.text,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 2,
@@ -87,8 +90,8 @@ class RiskQuizScreen extends StatelessWidget {
                         value:
                             (controller.currentQuestionIndex.value + 1) /
                             controller.totalQuestions,
-                        backgroundColor: Colors.white.withOpacity(0.05),
-                        color: accent,
+                        backgroundColor: colors.text.withOpacity(0.05),
+                        color: colors.accentCyan,
                         minHeight: 6,
                       ),
                     ),
@@ -96,8 +99,18 @@ class RiskQuizScreen extends StatelessWidget {
 
                   Expanded(
                     child: controller.isQuizFinished.value
-                        ? _buildResult(controller, s, accent)
-                        : _buildQuestion(controller, s, accent),
+                        ? _buildResult(
+                            context,
+                            controller,
+                            s,
+                            colors.accentCyan,
+                          )
+                        : _buildQuestion(
+                            context,
+                            controller,
+                            s,
+                            colors.accentCyan,
+                          ),
                   ),
                 ],
               ),
@@ -109,10 +122,12 @@ class RiskQuizScreen extends StatelessWidget {
   }
 
   Widget _buildQuestion(
+    BuildContext context,
     RiskQuizController controller,
     AppLocalizations s,
     Color accent,
   ) {
+    final colors = AppThemeColors.of(context);
     final questions = [
       _QuizQuestion(
         question: s.riskQuizQuestion1,
@@ -171,8 +186,8 @@ class RiskQuizScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               currentQuestion.question,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: colors.text,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 height: 1.3,
@@ -182,7 +197,7 @@ class RiskQuizScreen extends StatelessWidget {
             ...currentQuestion.options.map(
               (option) => Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
-                child: _buildOptionButton(option, controller, accent),
+                child: _buildOptionButton(context, option, controller, accent),
               ),
             ),
           ],
@@ -192,25 +207,27 @@ class RiskQuizScreen extends StatelessWidget {
   }
 
   Widget _buildOptionButton(
+    BuildContext context,
     _QuizOption option,
     RiskQuizController controller,
     Color accent,
   ) {
+    final colors = AppThemeColors.of(context);
     return GestureDetector(
       onTap: () => controller.selectAnswer(option.points),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.03),
+          color: colors.text.withOpacity(0.03),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withOpacity(0.08)),
+          border: Border.all(color: colors.text.withOpacity(0.08)),
         ),
         child: Row(
           children: [
             Expanded(
               child: Text(
                 option.text,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: colors.text, fontSize: 16),
               ),
             ),
             Icon(
@@ -225,10 +242,13 @@ class RiskQuizScreen extends StatelessWidget {
   }
 
   Widget _buildResult(
+    BuildContext context,
     RiskQuizController controller,
     AppLocalizations s,
     Color accent,
   ) {
+    final colors = AppThemeColors.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final riskLevel = controller.calculateRiskLevel();
     String resultText;
     IconData resultIcon;
@@ -275,8 +295,8 @@ class RiskQuizScreen extends StatelessWidget {
             Text(
               resultText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: colors.text,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
@@ -286,7 +306,7 @@ class RiskQuizScreen extends StatelessWidget {
               onPressed: () => controller.applyResultAndExit(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: accent,
-                foregroundColor: Colors.black,
+                foregroundColor: isDark ? Colors.black : Colors.white,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 48,
                   vertical: 20,

@@ -6,15 +6,28 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SettingsController extends GetxController {
   final RxString currentStartLang = TextCore.lan.obs;
+  final RxBool isDarkMode = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    final cache = CacheService();
-    currentStartLang.value = cache.getFromCash(TextCore.lanKey) as String;
+    // final cache = CacheService(); // Removed as per instruction
+    // currentStartLang.value = cache.getFromCash(TextCore.lanKey) as String; // Removed as per instruction
     if (Get.locale != null) {
       currentStartLang.value = Get.locale!.languageCode;
     }
+
+    // Initial theme state from cache
+    isDarkMode.value = CacheService().getFromCash('is_dark_mode') ?? true;
+  }
+
+  void toggleTheme() {
+    isDarkMode.toggle();
+    CacheService().saveToCash(
+      key: 'is_dark_mode',
+      data: isDarkMode.value,
+    ); // Changed key to named parameter
+    Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
   }
 
   void changeLanguage(String languageCode) {

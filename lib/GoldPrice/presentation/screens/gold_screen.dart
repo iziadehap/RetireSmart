@@ -7,7 +7,7 @@ import 'package:retiresmart/GoldPrice/presentation/widgets/build_price_card.dart
 import 'package:retiresmart/GoldPrice/presentation/widgets/gold_karat_card.dart';
 import 'package:retiresmart/GoldPrice/presentation/widgets/gold_details_section.dart';
 import 'package:retiresmart/GoldPrice/presentation/controller/gold_controller.dart';
-import 'package:retiresmart/core/colors.dart';
+import 'package:retiresmart/core/app_colors.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 
 class GoldScreen extends StatelessWidget {
@@ -16,6 +16,7 @@ class GoldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
+    final colors = AppThemeColors.of(context);
 
     // Controller is injected via Binding in GetPage
     final GoldController controller = Get.find<GoldController>();
@@ -25,8 +26,8 @@ class GoldScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           s.goldPrices,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: colors.text,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.2,
           ),
@@ -35,22 +36,12 @@ class GoldScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            size: 20,
-            color: Colors.white,
-          ),
+          icon: Icon(Icons.arrow_back_ios_new, size: 20, color: colors.text),
           onPressed: () => Get.back(),
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [bgStart, bgEnd],
-          ),
-        ),
+        color: colors.background,
         child: SafeArea(
           child: Column(
             children: [
@@ -69,7 +60,7 @@ class GoldScreen extends StatelessWidget {
                     return Center(
                       child: Text(
                         s.failedToLoadGoldData,
-                        style: TextStyle(color: Colors.white.withOpacity(0.7)),
+                        style: TextStyle(color: colors.subtext),
                       ),
                     );
                   }
@@ -78,8 +69,8 @@ class GoldScreen extends StatelessWidget {
 
                   return RefreshIndicator(
                     onRefresh: () async => controller.getGoldData(),
-                    color: accent,
-                    backgroundColor: bgEnd,
+                    color: colors.accentCyan,
+                    backgroundColor: colors.card,
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       padding: const EdgeInsets.all(20.0),
@@ -96,7 +87,7 @@ class GoldScreen extends StatelessWidget {
                           Text(
                             s.karatPrices,
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
+                              color: colors.text.withOpacity(0.5),
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5,

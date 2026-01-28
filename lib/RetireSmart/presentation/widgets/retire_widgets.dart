@@ -50,31 +50,6 @@ class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
   }
 }
 
-class DotGridPainter extends CustomPainter {
-  final Color color;
-  final double spacing;
-  final double opacity;
-  DotGridPainter({
-    this.color = Colors.white,
-    this.spacing = 30.0,
-    this.opacity = 0.05,
-  });
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = color.withOpacity(opacity)
-      ..style = PaintingStyle.fill;
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x, y), 1.0, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
 class ThousandsSeparatorInputFormatter extends TextInputFormatter {
   static const separator = ',';
 

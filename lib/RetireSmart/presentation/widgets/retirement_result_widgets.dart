@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get_x/get_core/src/get_main.dart';
-import 'package:get_x/get_navigation/src/extension_navigation.dart';
+import 'package:get_x/get.dart';
 import '../../domain/entities/retirement_entities.dart';
 import '../../data/models/inflation_model.dart';
 import '../../../core/text_core.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../core/app_colors.dart';
 import './common_painters.dart';
 
 class ResultHeroCard extends StatelessWidget {
@@ -26,25 +26,24 @@ class ResultHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isRisk = result.monthlySavingsNeeded > result.availableSavings;
+    final colors = AppThemeColors.of(context);
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
+        color: colors.card,
         borderRadius: BorderRadius.circular(32),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.white.withOpacity(0.05),
-            Colors.white.withOpacity(0.02),
-          ],
-        ),
-        border: Border.all(color: Colors.white.withOpacity(0.08)),
+        border: Border.all(color: colors.text.withOpacity(0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: isDark
+                ? Colors.black.withOpacity(0.4)
+                : colors.text.withOpacity(0.08),
+            blurRadius: 30,
+            offset: const Offset(0, 15),
+            spreadRadius: -5,
           ),
         ],
       ),
@@ -62,8 +61,8 @@ class ResultHeroCard extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             "${TextCore.egpCoin} ${result.monthlySavingsNeeded.toStringAsFixed(0)}",
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: colors.text,
               fontSize: 42,
               fontWeight: FontWeight.w900,
               height: 1,
@@ -72,10 +71,7 @@ class ResultHeroCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             s.requiredSavingsLabel,
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.5),
-              fontSize: 13,
-            ),
+            style: TextStyle(color: colors.subtext, fontSize: 13),
           ),
           const SizedBox(height: 24),
           Container(
@@ -163,12 +159,20 @@ class _MetricItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppThemeColors.of(context);
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: colors.card,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
+        border: Border.all(color: colors.text.withOpacity(0.05)),
+        boxShadow: [
+          BoxShadow(
+            color: colors.text.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,8 +188,8 @@ class _MetricItem extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: colors.text,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -194,7 +198,7 @@ class _MetricItem extends StatelessWidget {
           Text(
             label.toUpperCase(),
             style: TextStyle(
-              color: Colors.white.withOpacity(0.4),
+              color: colors.subtext,
               fontSize: 10,
               fontWeight: FontWeight.bold,
             ),
@@ -221,12 +225,20 @@ class ResultPortfolioCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppThemeColors.of(context);
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: colors.card,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
+        border: Border.all(color: colors.text.withOpacity(0.05)),
+        boxShadow: [
+          BoxShadow(
+            color: colors.text.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,8 +248,8 @@ class ResultPortfolioCard extends StatelessWidget {
             children: [
               Text(
                 s.assetAllocationLabel,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: colors.text,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -247,7 +259,7 @@ class ResultPortfolioCard extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ...result.investmentDistribution.entries.map((entry) {
-            Color barColor = _getColorForAsset(entry.key);
+            Color barColor = _getColorForAsset(entry.key, colors);
             return Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Column(
@@ -258,14 +270,14 @@ class ResultPortfolioCard extends StatelessWidget {
                       Text(
                         entry.key,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                          color: colors.text.withOpacity(0.8),
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         "${(entry.value * 100).toInt()}%",
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: colors.text,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -278,14 +290,13 @@ class ResultPortfolioCard extends StatelessWidget {
                       value: entry.value,
                       minHeight: 6,
                       color: barColor,
-                      backgroundColor: Colors.white.withOpacity(0.1),
+                      backgroundColor: colors.text.withOpacity(0.1),
                     ),
                   ),
                 ],
               ),
             );
           }),
-
           const SizedBox(height: 12),
           GestureDetector(
             onTap: () => Get.toNamed('/needHelp'),
@@ -321,8 +332,8 @@ class ResultPortfolioCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       s.investmentGuideTitle,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: colors.text,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
@@ -331,7 +342,7 @@ class ResultPortfolioCard extends StatelessWidget {
                   ),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
-                    color: Colors.white.withOpacity(0.3),
+                    color: colors.text.withOpacity(0.3),
                     size: 14,
                   ),
                 ],
@@ -344,7 +355,7 @@ class ResultPortfolioCard extends StatelessWidget {
     );
   }
 
-  Color _getColorForAsset(String asset) {
+  Color _getColorForAsset(String asset, AppThemeColors colors) {
     switch (asset) {
       case 'Stocks':
         return const Color(0xFF38BDF8);
@@ -353,7 +364,7 @@ class ResultPortfolioCard extends StatelessWidget {
       case 'Certificates':
         return const Color(0xFF94A3B8);
       default:
-        return Colors.white;
+        return colors.text;
     }
   }
 }
@@ -376,12 +387,21 @@ class ResultInflationChart extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final colors = AppThemeColors.of(context);
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: colors.card,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
+        border: Border.all(color: colors.text.withOpacity(0.05)),
+        boxShadow: [
+          BoxShadow(
+            color: colors.text.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -391,8 +411,8 @@ class ResultInflationChart extends StatelessWidget {
             children: [
               Text(
                 s.inflationProjectionLabel,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: colors.text,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -408,6 +428,8 @@ class ResultInflationChart extends StatelessWidget {
               painter: InflationChartPainter(
                 estimates: inflationModel.estimates!,
                 lineColor: warning,
+                gridColor: colors.text,
+                dotStrokeColor: colors.background,
               ),
             ),
           ),
@@ -417,17 +439,11 @@ class ResultInflationChart extends StatelessWidget {
             children: [
               Text(
                 "${inflationModel.estimates!.first.year}",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.3),
-                  fontSize: 10,
-                ),
+                style: TextStyle(color: colors.subtext, fontSize: 10),
               ),
               Text(
                 "${inflationModel.estimates!.last.year}",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.3),
-                  fontSize: 10,
-                ),
+                style: TextStyle(color: colors.subtext, fontSize: 10),
               ),
             ],
           ),
