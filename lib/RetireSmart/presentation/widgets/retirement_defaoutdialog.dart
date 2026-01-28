@@ -124,7 +124,9 @@ void showRetirementDialog({
                               child: _buildDialogButton(
                                 label: s.noCancel,
                                 isPrimary: false,
-                                onTap: () => Get.back(),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -136,6 +138,7 @@ void showRetirementDialog({
                                 onTap: () {
                                   try {
                                     RetirementDeleteCash().call();
+                                    Navigator.pop(context);
                                     Get.offNamed('/retirement');
                                   } catch (e) {
                                     Get.snackbar(

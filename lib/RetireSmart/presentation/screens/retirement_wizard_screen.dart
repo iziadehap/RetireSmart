@@ -437,14 +437,31 @@ class RetirementWizardScreen extends StatelessWidget {
         ),
         const SizedBox(height: 30),
 
-        Text(
-          s.riskAppetiteLabel,
-          style: TextStyle(
-            color: Colors.grey[400],
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              s.riskAppetiteLabel,
+              style: TextStyle(
+                color: Colors.grey[400],
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Get.toNamed('/riskQuiz'),
+              child: Text(
+                s.riskQuizPrompt,
+                style: const TextStyle(
+                  color: Color(0xFF00F5FF),
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 12),
 

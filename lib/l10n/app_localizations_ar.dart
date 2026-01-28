@@ -139,7 +139,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorGeneric => 'خطأ';
 
   @override
-  String get goldPrices => 'سعر الذهب (live)';
+  String get goldPrices => 'سعر الذهب';
 
   @override
   String get failedToLoadGoldData => 'فشل في تحميل بيانات الذهب.';
@@ -207,4 +207,153 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inflationProjectionLabel => 'توقعات التضخم';
+
+  @override
+  String get connectionLost => 'فقد الاتصال';
+
+  @override
+  String get couldntReachTheGoldServers =>
+      'لا يمكن الوصول إلى خادم الذهب. يرجى التحقق من اتصالك بالإنترنت.';
+
+  @override
+  String get serverError => 'خطأ في الخادم';
+
+  @override
+  String get problemWithTheRequest =>
+      'هناك مشكلة في طلبك. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get storageError => 'خطأ في التخزين';
+
+  @override
+  String get failedToLoadCachedData =>
+      'فشل في تحميل البيانات المخزنة. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get backOnline => 'تم الاتصال بالإنترنت';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get lastSeen => 'آخر سعر';
+
+  @override
+  String get offline => 'غير متصل بالإنترنت';
+
+  @override
+  String get sharePlanMessage =>
+      'إليك خطتي التقاعدية من تطبيق المستشار الذكي للتقاعد!';
+
+  @override
+  String get sharePlanSubject => 'خطتي التقاعدية';
+
+  @override
+  String get investmentGuideTitle => 'دليل الاستثمار';
+
+  @override
+  String get thndrGuideTitle => 'دليل الاستثمار عبر Thndr';
+
+  @override
+  String get thndrRecommendation =>
+      'Thndr هو التطبيق الموصى به للاستثمار في مصر – سهل وآمن';
+
+  @override
+  String get goldSectionTitle => 'الذهب (Gold)';
+
+  @override
+  String get goldSectionDesc =>
+      'للاستثمار في الذهب، اشترِ في صندوق الذهب مثل \'Thndr Gold Fund\' – يتابع سعر الذهب العالمي.';
+
+  @override
+  String get stocksSectionTitle => 'الأسهم (Stocks)';
+
+  @override
+  String get stocksSectionDesc =>
+      'للأسهم، اشترِ في صندوق أسهم مثل \'Thndr Egypt Stock Fund\' – يستثمر في أسهم البورصة المصرية. عائد متوقع 10-15% سنويًا حسب السوق';
+
+  @override
+  String get certificatesSectionTitle => 'الشهادات (Certificates)';
+
+  @override
+  String get certificatesSectionDesc =>
+      'للشهادات، اختر شهادات بنوك مثل \'Thndr Bank Certificates\' – عائد ثابت يصل 20%، آمنة ومضمونة';
+
+  @override
+  String get downloadThndr => 'تحميل Thndr';
+
+  @override
+  String get referralMessage =>
+      'استخدم رابطي للتسجيل: https://thndr.app.link/iziadehap وستحصل على مكافأة، وأنا هأخذ عمولة بعد إيداعك الأول';
+
+  @override
+  String get riskQuizPrompt => 'مش عارف مستوى مخاطرتك؟ جرب الاختبار ده';
+
+  @override
+  String get riskQuizTitle => 'تقييم المخاطر';
+
+  @override
+  String get riskQuizQuestion1 => 'إمتى ناوي تبدأ تسحب من مدخراتك للتقاعد؟';
+
+  @override
+  String get riskQuizQ1Option1 => 'في أقل من 5 سنين';
+
+  @override
+  String get riskQuizQ1Option2 => 'خلال 5 لـ 15 سنة';
+
+  @override
+  String get riskQuizQ1Option3 => 'بعد أكتر من 15 سنة';
+
+  @override
+  String get riskQuizQuestion2 =>
+      'لو استثماراتك قلت قيمتها 20% فجأة في يوم وليلة، هتعمل إيه؟';
+
+  @override
+  String get riskQuizQ2Option1 => 'هبيع كل حاجة فوراً عشان أحمي اللي فاضل';
+
+  @override
+  String get riskQuizQ2Option2 => 'هستنى وأشوف لو هتتحسن، بس مش هزود استثماري';
+
+  @override
+  String get riskQuizQ2Option3 =>
+      'هفضل هادي أو حتى هزود استثماري بما إن الأسعار رخيصة';
+
+  @override
+  String get riskQuizQuestion3 => 'إيه هو هدفك المالي الأساسي من الخطة دي؟';
+
+  @override
+  String get riskQuizQ3Option1 => 'حماية أصل فلوسي بأي تمن';
+
+  @override
+  String get riskQuizQ3Option2 => 'نمو متوازن مع الحفاظ على مستوى مخاطرة متوسط';
+
+  @override
+  String get riskQuizQ3Option3 =>
+      'أقصى نمو ممكن على المدى الطويل حتى لو فيه تقلبات عالية';
+
+  @override
+  String get riskQuizQuestion4 => 'تقدر توصف خبرتك في الاستثمار بإيه؟';
+
+  @override
+  String get riskQuizQ4Option1 => 'مبتدئ - أنا لسه جديد في موضوع الاستثمار';
+
+  @override
+  String get riskQuizQ4Option2 => 'متوسط - فاهم في الأسهم والسندات شوية';
+
+  @override
+  String get riskQuizQ4Option3 => 'متقدم - بتابع السوق وبدير محفظتي بنفسي';
+
+  @override
+  String get riskQuizResultLow =>
+      'نتايجك بتقول إن مستوى مخاطرتك (محافظ/منخفض).';
+
+  @override
+  String get riskQuizResultMedium =>
+      'نتايجك بتقول إن مستوى مخاطرتك (متوازن/متوسط).';
+
+  @override
+  String get riskQuizResultHigh => 'نتايجك بتقول إن مستوى مخاطرتك (جريء/عالي).';
+
+  @override
+  String get setRiskLevelButton => 'تعيين مستوى المخاطرة';
 }

@@ -10,7 +10,12 @@ import 'package:retiresmart/Settings/presentation/pages/settings_page.dart';
 import 'package:retiresmart/Splash/presentation/pages/splash_page.dart';
 import 'package:retiresmart/Splash/presentation/controller/splash_binding.dart';
 
+import 'package:retiresmart/RetireSmart/presentation/screens/need_help_screen.dart';
+import 'package:retiresmart/RetireSmart/presentation/screens/risk_quiz_screen.dart';
+
 List<GetPage> pages = [
+  GetPage(name: '/needHelp', page: () => const InvestmentGuideScreen()),
+  GetPage(name: '/riskQuiz', page: () => const RiskQuizScreen()),
   GetPage(
     name: '/settings',
     page: () => const SettingsPage(),

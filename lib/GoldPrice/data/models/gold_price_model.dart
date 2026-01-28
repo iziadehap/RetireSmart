@@ -18,6 +18,8 @@ class GoldPriceModel {
   final String source;
   @HiveField(6)
   final DateTime lastUpdated;
+  @HiveField(7)
+  final bool isFromCash;
 
   GoldPriceModel({
     required this.gold24k,
@@ -27,9 +29,10 @@ class GoldPriceModel {
     required this.unit,
     required this.source,
     required this.lastUpdated,
+    required this.isFromCash,
   });
 
-  factory GoldPriceModel.fromJson(Map<String, dynamic> json) {
+  factory GoldPriceModel.fromJson(Map<String, dynamic> json, bool isFromCash) {
     return GoldPriceModel(
       gold24k: PriceDetails.fromJson(json['gold_24k']),
       gold21k: PriceDetails.fromJson(json['gold_21k']),
@@ -38,6 +41,7 @@ class GoldPriceModel {
       unit: json['unit'],
       source: json['source'],
       lastUpdated: DateTime.parse(json['last_updated']),
+      isFromCash: isFromCash,
     );
   }
 

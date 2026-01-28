@@ -24,13 +24,14 @@ class GoldPriceModelAdapter extends TypeAdapter<GoldPriceModel> {
       unit: fields[4] as String,
       source: fields[5] as String,
       lastUpdated: fields[6] as DateTime,
+      isFromCash: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, GoldPriceModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.gold24k)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class GoldPriceModelAdapter extends TypeAdapter<GoldPriceModel> {
       ..writeByte(5)
       ..write(obj.source)
       ..writeByte(6)
-      ..write(obj.lastUpdated);
+      ..write(obj.lastUpdated)
+      ..writeByte(7)
+      ..write(obj.isFromCash);
   }
 
   @override

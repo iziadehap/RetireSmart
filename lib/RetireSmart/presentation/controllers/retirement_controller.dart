@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:retiresmart/RetireSmart/data/models/inflation_model.dart';
 import 'package:retiresmart/RetireSmart/domain/repo/retire_repo.dart';
 import 'package:retiresmart/RetireSmart/domain/usecases/retirement_delete_cash.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../domain/entities/retirement_entities.dart';
 import '../../domain/usecases/retirement_calculator.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
@@ -14,6 +19,7 @@ class RetirementController extends GetxController {
   var currentStep = 0.obs;
   final int totalSteps = 3;
   late PageController pageController;
+  final ScreenshotController screenshotController = ScreenshotController();
 
   // Input Controllers
   final ageController = TextEditingController();
@@ -47,6 +53,7 @@ class RetirementController extends GetxController {
         print('find result and go to result screen now ===================');
         Get.off(
           () => RetirementResultScreen(
+            controller: this,
             result: result,
             inflationModel: cachedData['inflationModel'] as InflationModel,
           ),
@@ -191,6 +198,7 @@ class RetirementController extends GetxController {
         () => RetirementResultScreen(
           result: result,
           inflationModel: result.inflationModel,
+          controller: this,
         ),
       );
     } catch (e) {
@@ -227,5 +235,58 @@ class RetirementController extends GetxController {
       pageController.jumpToPage(0);
     }
     selectedRiskLevel.value = RiskLevel.medium;
+  }
+
+  Future<void> shareResult(
+    BuildContext context,
+    RetirementResult result,
+    InflationModel inflationModel,
+  ) async {
+    try {
+      final s = AppLocalizations.of(context)!;
+      String shareText = s.sharePlanMessage;
+      String shareSubject = s.sharePlanSubject;
+
+      // Option 2: Share as screenshot (now capturing full widget)
+      final image = await screenshotController.captureFromWidget(
+        MediaQuery(
+          data: MediaQueryData.fromView(View.of(context)),
+          child: Directionality(
+            textDirection: Get.locale?.languageCode == 'ar'
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+            child: Material(
+              color: const Color(0xFF0A0A0A),
+              child: RetirementResultScreen(
+                result: result,
+                inflationModel: inflationModel,
+                controller: this,
+              ).buildReportContent(context, s, isForSharing: true),
+            ),
+          ),
+        ),
+        delay: const Duration(milliseconds: 200),
+      );
+
+      // Save temporarily
+      final directory = await getTemporaryDirectory();
+      final imagePath = await File(
+        '${directory.path}/retire_plan.png',
+      ).writeAsBytes(image);
+
+      // Share the image with text
+      await Share.shareXFiles(
+        [XFile(imagePath.path)],
+        text: shareText,
+        subject: shareSubject,
+      );
+    } catch (e) {
+      print('error win shere :$e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${AppLocalizations.of(context)!.errorGeneric}: $e"),
+        ),
+      );
+    }
   }
 }

@@ -11,14 +11,16 @@ class RetireDataSources {
     int years = 20,
     String risk = 'medium',
   }) async {
-    final response = await _dio.get(
-      '$_baseUrl/estimate-inflation',
-      queryParameters: {'years': years, 'risk': risk},
-      options: Options(headers: ApiAuth.getAuthHeaders()),
-    );
-    // print('inflation response is ');
-    // print(response.data);
-    final inflationModel = InflationModel.fromJson(response.data);
-    return inflationModel;
+    try {
+      final response = await _dio.get(
+        '$_baseUrl/estimate-inflation',
+        queryParameters: {'years': years, 'risk': risk},
+        options: Options(headers: ApiAuth.getAuthHeaders()),
+      );
+      return InflationModel.fromJson(response.data);
+    } catch (e) {
+      print('Error fetching inflation: $e');
+      rethrow; // Rethrow so the repository/controller can handle it
+    }
   }
 }

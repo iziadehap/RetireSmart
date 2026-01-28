@@ -434,14 +434,9 @@ class S {
     return Intl.message('Error', name: 'errorGeneric', desc: '', args: []);
   }
 
-  /// `Gold Prices (Live)`
+  /// `Gold Prices`
   String get goldPrices {
-    return Intl.message(
-      'Gold Prices (Live)',
-      name: 'goldPrices',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Gold Prices', name: 'goldPrices', desc: '', args: []);
   }
 
   /// `Failed to load gold data.`
@@ -604,6 +599,436 @@ class S {
     return Intl.message(
       'Inflation Projection',
       name: 'inflationProjectionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection Lost`
+  String get connectionLost {
+    return Intl.message(
+      'Connection Lost',
+      name: 'connectionLost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't reach the gold servers. Please check your internet connection.`
+  String get couldntReachTheGoldServers {
+    return Intl.message(
+      'We couldn\'t reach the gold servers. Please check your internet connection.',
+      name: 'couldntReachTheGoldServers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Server Error`
+  String get serverError {
+    return Intl.message(
+      'Server Error',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There was a problem with the request. Please try again later.`
+  String get problemWithTheRequest {
+    return Intl.message(
+      'There was a problem with the request. Please try again later.',
+      name: 'problemWithTheRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Storage Error`
+  String get storageError {
+    return Intl.message(
+      'Storage Error',
+      name: 'storageError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load cached data. Please try refreshing.`
+  String get failedToLoadCachedData {
+    return Intl.message(
+      'Failed to load cached data. Please try refreshing.',
+      name: 'failedToLoadCachedData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BACK ONLINE`
+  String get backOnline {
+    return Intl.message('BACK ONLINE', name: 'backOnline', desc: '', args: []);
+  }
+
+  /// `TRY AGAIN`
+  String get tryAgain {
+    return Intl.message('TRY AGAIN', name: 'tryAgain', desc: '', args: []);
+  }
+
+  /// `Last Seen`
+  String get lastSeen {
+    return Intl.message('Last Seen', name: 'lastSeen', desc: '', args: []);
+  }
+
+  /// `You are offline. Showing cached data.`
+  String get offline {
+    return Intl.message(
+      'You are offline. Showing cached data.',
+      name: 'offline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here is my retirement plan from RetireSmart AI!`
+  String get sharePlanMessage {
+    return Intl.message(
+      'Here is my retirement plan from RetireSmart AI!',
+      name: 'sharePlanMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Retirement Plan`
+  String get sharePlanSubject {
+    return Intl.message(
+      'My Retirement Plan',
+      name: 'sharePlanSubject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Investment Guide`
+  String get investmentGuideTitle {
+    return Intl.message(
+      'Investment Guide',
+      name: 'investmentGuideTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Investment Guide via Thndr`
+  String get thndrGuideTitle {
+    return Intl.message(
+      'Investment Guide via Thndr',
+      name: 'thndrGuideTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thndr is the recommended app for investing in Egypt – easy and secure`
+  String get thndrRecommendation {
+    return Intl.message(
+      'Thndr is the recommended app for investing in Egypt – easy and secure',
+      name: 'thndrRecommendation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gold`
+  String get goldSectionTitle {
+    return Intl.message('Gold', name: 'goldSectionTitle', desc: '', args: []);
+  }
+
+  /// `To invest in gold, buy into a gold fund like 'Thndr Gold Fund' – it tracks the global gold price.`
+  String get goldSectionDesc {
+    return Intl.message(
+      'To invest in gold, buy into a gold fund like \'Thndr Gold Fund\' – it tracks the global gold price.',
+      name: 'goldSectionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stocks`
+  String get stocksSectionTitle {
+    return Intl.message(
+      'Stocks',
+      name: 'stocksSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For stocks, buy into an equity fund like 'Thndr Egypt Stock Fund' – it invests in Egyptian Stock Exchange shares. Expected annual return 10-15% depending on the market.`
+  String get stocksSectionDesc {
+    return Intl.message(
+      'For stocks, buy into an equity fund like \'Thndr Egypt Stock Fund\' – it invests in Egyptian Stock Exchange shares. Expected annual return 10-15% depending on the market.',
+      name: 'stocksSectionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certificates`
+  String get certificatesSectionTitle {
+    return Intl.message(
+      'Certificates',
+      name: 'certificatesSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For certificates, choose bank certificates like 'Thndr Bank Certificates' – fixed return up to 20%, safe and guaranteed.`
+  String get certificatesSectionDesc {
+    return Intl.message(
+      'For certificates, choose bank certificates like \'Thndr Bank Certificates\' – fixed return up to 20%, safe and guaranteed.',
+      name: 'certificatesSectionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download Thndr`
+  String get downloadThndr {
+    return Intl.message(
+      'Download Thndr',
+      name: 'downloadThndr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use my referral link to sign up: https://thndr.app.link/iziadehap and you'll get a reward, and I'll get a commission after your first deposit.`
+  String get referralMessage {
+    return Intl.message(
+      'Use my referral link to sign up: https://thndr.app.link/iziadehap and you\'ll get a reward, and I\'ll get a commission after your first deposit.',
+      name: 'referralMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't know your risk? Try this quiz`
+  String get riskQuizPrompt {
+    return Intl.message(
+      'Don\'t know your risk? Try this quiz',
+      name: 'riskQuizPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Risk Assessment`
+  String get riskQuizTitle {
+    return Intl.message(
+      'Risk Assessment',
+      name: 'riskQuizTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When do you plan to start withdrawing your retirement savings?`
+  String get riskQuizQuestion1 {
+    return Intl.message(
+      'When do you plan to start withdrawing your retirement savings?',
+      name: 'riskQuizQuestion1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In less than 5 years`
+  String get riskQuizQ1Option1 {
+    return Intl.message(
+      'In less than 5 years',
+      name: 'riskQuizQ1Option1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In 5 to 15 years`
+  String get riskQuizQ1Option2 {
+    return Intl.message(
+      'In 5 to 15 years',
+      name: 'riskQuizQ1Option2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In more than 15 years`
+  String get riskQuizQ1Option3 {
+    return Intl.message(
+      'In more than 15 years',
+      name: 'riskQuizQ1Option3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If your investments dropped 20% in value overnight, what would you do?`
+  String get riskQuizQuestion2 {
+    return Intl.message(
+      'If your investments dropped 20% in value overnight, what would you do?',
+      name: 'riskQuizQuestion2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell everything immediately to protect my remaining money`
+  String get riskQuizQ2Option1 {
+    return Intl.message(
+      'Sell everything immediately to protect my remaining money',
+      name: 'riskQuizQ2Option1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wait and see if it recovers, but avoid adding more`
+  String get riskQuizQ2Option2 {
+    return Intl.message(
+      'Wait and see if it recovers, but avoid adding more',
+      name: 'riskQuizQ2Option2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stay calm or even invest more while prices are low`
+  String get riskQuizQ2Option3 {
+    return Intl.message(
+      'Stay calm or even invest more while prices are low',
+      name: 'riskQuizQ2Option3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What is your primary financial goal for this plan?`
+  String get riskQuizQuestion3 {
+    return Intl.message(
+      'What is your primary financial goal for this plan?',
+      name: 'riskQuizQuestion3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Protecting my initial savings at all costs`
+  String get riskQuizQ3Option1 {
+    return Intl.message(
+      'Protecting my initial savings at all costs',
+      name: 'riskQuizQ3Option1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A balanced growth while keeping risk moderate`
+  String get riskQuizQ3Option2 {
+    return Intl.message(
+      'A balanced growth while keeping risk moderate',
+      name: 'riskQuizQ3Option2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximizing long-term growth even with high volatility`
+  String get riskQuizQ3Option3 {
+    return Intl.message(
+      'Maximizing long-term growth even with high volatility',
+      name: 'riskQuizQ3Option3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How would you describe your investment experience?`
+  String get riskQuizQuestion4 {
+    return Intl.message(
+      'How would you describe your investment experience?',
+      name: 'riskQuizQuestion4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Beginner - I am new to investing`
+  String get riskQuizQ4Option1 {
+    return Intl.message(
+      'Beginner - I am new to investing',
+      name: 'riskQuizQ4Option1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intermediate - I understand stocks and bonds`
+  String get riskQuizQ4Option2 {
+    return Intl.message(
+      'Intermediate - I understand stocks and bonds',
+      name: 'riskQuizQ4Option2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advanced - I follow the markets and manage my portfolio`
+  String get riskQuizQ4Option3 {
+    return Intl.message(
+      'Advanced - I follow the markets and manage my portfolio',
+      name: 'riskQuizQ4Option3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your results suggest a CONSERVATIVE risk profile.`
+  String get riskQuizResultLow {
+    return Intl.message(
+      'Your results suggest a CONSERVATIVE risk profile.',
+      name: 'riskQuizResultLow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your results suggest a BALANCED risk profile.`
+  String get riskQuizResultMedium {
+    return Intl.message(
+      'Your results suggest a BALANCED risk profile.',
+      name: 'riskQuizResultMedium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your results suggest an AGGRESSIVE risk profile.`
+  String get riskQuizResultHigh {
+    return Intl.message(
+      'Your results suggest an AGGRESSIVE risk profile.',
+      name: 'riskQuizResultHigh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SET RISK LEVEL`
+  String get setRiskLevelButton {
+    return Intl.message(
+      'SET RISK LEVEL',
+      name: 'setRiskLevelButton',
       desc: '',
       args: [],
     );

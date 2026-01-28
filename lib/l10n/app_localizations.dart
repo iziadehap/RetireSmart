@@ -359,7 +359,7 @@ abstract class AppLocalizations {
   /// No description provided for @goldPrices.
   ///
   /// In en, this message translates to:
-  /// **'Gold Prices (Live)'**
+  /// **'Gold Prices'**
   String get goldPrices;
 
   /// No description provided for @failedToLoadGoldData.
@@ -493,6 +493,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inflation Projection'**
   String get inflationProjectionLabel;
+
+  /// No description provided for @connectionLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Lost'**
+  String get connectionLost;
+
+  /// No description provided for @couldntReachTheGoldServers.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t reach the gold servers. Please check your internet connection.'**
+  String get couldntReachTheGoldServers;
+
+  /// No description provided for @serverError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server Error'**
+  String get serverError;
+
+  /// No description provided for @problemWithTheRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'There was a problem with the request. Please try again later.'**
+  String get problemWithTheRequest;
+
+  /// No description provided for @storageError.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage Error'**
+  String get storageError;
+
+  /// No description provided for @failedToLoadCachedData.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load cached data. Please try refreshing.'**
+  String get failedToLoadCachedData;
+
+  /// No description provided for @backOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'BACK ONLINE'**
+  String get backOnline;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'TRY AGAIN'**
+  String get tryAgain;
+
+  /// No description provided for @lastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get lastSeen;
+
+  /// No description provided for @offline.
+  ///
+  /// In en, this message translates to:
+  /// **'You are offline. Showing cached data.'**
+  String get offline;
+
+  /// No description provided for @sharePlanMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Here is my retirement plan from RetireSmart AI!'**
+  String get sharePlanMessage;
+
+  /// No description provided for @sharePlanSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'My Retirement Plan'**
+  String get sharePlanSubject;
+
+  /// No description provided for @investmentGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Investment Guide'**
+  String get investmentGuideTitle;
+
+  /// No description provided for @thndrGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Investment Guide via Thndr'**
+  String get thndrGuideTitle;
+
+  /// No description provided for @thndrRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Thndr is the recommended app for investing in Egypt – easy and secure'**
+  String get thndrRecommendation;
+
+  /// No description provided for @goldSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get goldSectionTitle;
+
+  /// No description provided for @goldSectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'To invest in gold, buy into a gold fund like \'Thndr Gold Fund\' – it tracks the global gold price.'**
+  String get goldSectionDesc;
+
+  /// No description provided for @stocksSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stocks'**
+  String get stocksSectionTitle;
+
+  /// No description provided for @stocksSectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'For stocks, buy into an equity fund like \'Thndr Egypt Stock Fund\' – it invests in Egyptian Stock Exchange shares. Expected annual return 10-15% depending on the market.'**
+  String get stocksSectionDesc;
+
+  /// No description provided for @certificatesSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get certificatesSectionTitle;
+
+  /// No description provided for @certificatesSectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'For certificates, choose bank certificates like \'Thndr Bank Certificates\' – fixed return up to 20%, safe and guaranteed.'**
+  String get certificatesSectionDesc;
+
+  /// No description provided for @downloadThndr.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Thndr'**
+  String get downloadThndr;
+
+  /// No description provided for @referralMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my referral link to sign up: https://thndr.app.link/iziadehap and you\'ll get a reward, and I\'ll get a commission after your first deposit.'**
+  String get referralMessage;
+
+  /// No description provided for @riskQuizPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t know your risk? Try this quiz'**
+  String get riskQuizPrompt;
+
+  /// No description provided for @riskQuizTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk Assessment'**
+  String get riskQuizTitle;
+
+  /// No description provided for @riskQuizQuestion1.
+  ///
+  /// In en, this message translates to:
+  /// **'When do you plan to start withdrawing your retirement savings?'**
+  String get riskQuizQuestion1;
+
+  /// No description provided for @riskQuizQ1Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'In less than 5 years'**
+  String get riskQuizQ1Option1;
+
+  /// No description provided for @riskQuizQ1Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'In 5 to 15 years'**
+  String get riskQuizQ1Option2;
+
+  /// No description provided for @riskQuizQ1Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'In more than 15 years'**
+  String get riskQuizQ1Option3;
+
+  /// No description provided for @riskQuizQuestion2.
+  ///
+  /// In en, this message translates to:
+  /// **'If your investments dropped 20% in value overnight, what would you do?'**
+  String get riskQuizQuestion2;
+
+  /// No description provided for @riskQuizQ2Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell everything immediately to protect my remaining money'**
+  String get riskQuizQ2Option1;
+
+  /// No description provided for @riskQuizQ2Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait and see if it recovers, but avoid adding more'**
+  String get riskQuizQ2Option2;
+
+  /// No description provided for @riskQuizQ2Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay calm or even invest more while prices are low'**
+  String get riskQuizQ2Option3;
+
+  /// No description provided for @riskQuizQuestion3.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your primary financial goal for this plan?'**
+  String get riskQuizQuestion3;
+
+  /// No description provided for @riskQuizQ3Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Protecting my initial savings at all costs'**
+  String get riskQuizQ3Option1;
+
+  /// No description provided for @riskQuizQ3Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'A balanced growth while keeping risk moderate'**
+  String get riskQuizQ3Option2;
+
+  /// No description provided for @riskQuizQ3Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximizing long-term growth even with high volatility'**
+  String get riskQuizQ3Option3;
+
+  /// No description provided for @riskQuizQuestion4.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you describe your investment experience?'**
+  String get riskQuizQuestion4;
+
+  /// No description provided for @riskQuizQ4Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner - I am new to investing'**
+  String get riskQuizQ4Option1;
+
+  /// No description provided for @riskQuizQ4Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate - I understand stocks and bonds'**
+  String get riskQuizQ4Option2;
+
+  /// No description provided for @riskQuizQ4Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced - I follow the markets and manage my portfolio'**
+  String get riskQuizQ4Option3;
+
+  /// No description provided for @riskQuizResultLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Your results suggest a CONSERVATIVE risk profile.'**
+  String get riskQuizResultLow;
+
+  /// No description provided for @riskQuizResultMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Your results suggest a BALANCED risk profile.'**
+  String get riskQuizResultMedium;
+
+  /// No description provided for @riskQuizResultHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Your results suggest an AGGRESSIVE risk profile.'**
+  String get riskQuizResultHigh;
+
+  /// No description provided for @setRiskLevelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'SET RISK LEVEL'**
+  String get setRiskLevelButton;
 }
 
 class _AppLocalizationsDelegate
