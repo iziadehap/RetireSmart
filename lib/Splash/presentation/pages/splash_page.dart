@@ -89,10 +89,12 @@ class SplashPage extends GetView<SplashController> {
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          Icons.auto_graph_rounded,
-                          color: Color(0xFFF2B90D),
-                          size: 50,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(24),
+                          child: Image.asset(
+                            'assets/images/appIcon_2.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     );

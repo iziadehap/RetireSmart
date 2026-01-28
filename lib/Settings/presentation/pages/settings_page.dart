@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import '../controller/settings_controller.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
 
@@ -147,6 +148,61 @@ class SettingsPage extends GetView<SettingsController> {
                     ),
                   ),
 
+                  const SizedBox(height: 32),
+
+                  // Developers Section
+                  FadeIn(
+                    delay: 500,
+                    child: Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.03),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.1),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(
+                                Icons.code_rounded,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                              SizedBox(width: 12),
+                              Text(
+                                "Developers",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          _buildDevTile(
+                            "Ziad Ehab",
+                            "@iziadehap",
+                            () => controller.launchInstagram("iziadehap"),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: Divider(color: Colors.white10),
+                          ),
+                          _buildDevTile(
+                            "Bassem Tarek",
+                            "@ibassemtarek",
+                            () => controller.launchInstagram("ibassemtarek"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
                   const SizedBox(height: 24),
 
                   // App Info Placeholder
@@ -165,6 +221,56 @@ class SettingsPage extends GetView<SettingsController> {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDevTile(String name, String handle, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFE1306C).withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Bootstrap.instagram,
+              color: Color(0xFFE1306C),
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  handle,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.5),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Icon(
+            Icons.open_in_new_rounded,
+            color: Colors.white.withOpacity(0.2),
+            size: 18,
           ),
         ],
       ),
