@@ -109,5 +109,13 @@
     "riskQuizResultLow": "Your results suggest a CONSERVATIVE risk profile.",
     "riskQuizResultMedium": "Your results suggest a BALANCED risk profile.",
     "riskQuizResultHigh": "Your results suggest an AGGRESSIVE risk profile.",
-    "setRiskLevelButton": "SET RISK LEVEL"
+    "setRiskLevelButton": "SET RISK LEVEL",
+    "onboardingTitle1": "Plan Your Future",
+    "onboardingDesc1": "Take control of your retirement with AI-powered financial projections.",
+    "onboardingTitle2": "Track Gold Prices",
+    "onboardingDesc2": "Stay updated with live gold market rates and investment opportunities.",
+    "onboardingTitle3": "Localized Experience",
+    "onboardingDesc3": "Access all features in both Arabic and English tailored for your needs.",
+    "getStarted": "Get Started",
+    "skip": "Skip"
 }

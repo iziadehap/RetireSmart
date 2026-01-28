@@ -9,6 +9,8 @@ import 'package:retiresmart/Settings/presentation/controller/settings_binding.da
 import 'package:retiresmart/Settings/presentation/pages/settings_page.dart';
 import 'package:retiresmart/Splash/presentation/pages/splash_page.dart';
 import 'package:retiresmart/Splash/presentation/controller/splash_binding.dart';
+import 'package:retiresmart/Onboarding/presentation/pages/onboarding_page.dart';
+import 'package:retiresmart/Onboarding/presentation/controller/onboarding_binding.dart';
 
 import 'package:retiresmart/RetireSmart/presentation/screens/need_help_screen.dart';
 import 'package:retiresmart/RetireSmart/presentation/screens/risk_quiz_screen.dart';
@@ -40,5 +42,10 @@ List<GetPage> pages = [
     name: '/gold',
     page: () => const GoldScreen(),
     binding: GoldBinding(),
+  ),
+  GetPage(
+    name: '/onboarding',
+    page: () => const OnboardingPage(),
+    binding: OnboardingBinding(),
   ),
 ];

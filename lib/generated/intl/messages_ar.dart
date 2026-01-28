@@ -99,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "نستخدم هذه المعلومات لحساب الفجوة المالية.",
     ),
     "generatePlanButton": MessageLookupByLibrary.simpleMessage("إنشاء الخطة"),
+    "getStarted": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
     "goldInvestment": MessageLookupByLibrary.simpleMessage(
       "الاستثمار في الذهب",
     ),
@@ -134,6 +135,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "nextButton": MessageLookupByLibrary.simpleMessage("التالي"),
     "noCancel": MessageLookupByLibrary.simpleMessage("لا، إلغاء"),
     "offline": MessageLookupByLibrary.simpleMessage("غير متصل بالإنترنت"),
+    "onboardingDesc1": MessageLookupByLibrary.simpleMessage(
+      "تحكم في تقاعدك مع توقعات مالية مدعومة بالذكاء الاصطناعي.",
+    ),
+    "onboardingDesc2": MessageLookupByLibrary.simpleMessage(
+      "ابق على اطلاع بأسعار الذهب الحية وفرص الاستثمار المتاحة.",
+    ),
+    "onboardingDesc3": MessageLookupByLibrary.simpleMessage(
+      "جميع الخصائص متاحة باللغتين العربية والإنجليزية لتناسب احتياجاتك.",
+    ),
+    "onboardingTitle1": MessageLookupByLibrary.simpleMessage("خطط لمستقبلك"),
+    "onboardingTitle2": MessageLookupByLibrary.simpleMessage(
+      "تتبع أسعار الذهب",
+    ),
+    "onboardingTitle3": MessageLookupByLibrary.simpleMessage(
+      "تجربة محلية بالكامل",
+    ),
     "pleaseWaitLabel": MessageLookupByLibrary.simpleMessage(
       "يرجى الانتظار لحظة...",
     ),
@@ -243,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "إليك خطتي التقاعدية من تطبيق المستشار الذكي للتقاعد!",
     ),
     "sharePlanSubject": MessageLookupByLibrary.simpleMessage("خطتي التقاعدية"),
+    "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
     "source": MessageLookupByLibrary.simpleMessage("المصدر"),
     "step1Title": MessageLookupByLibrary.simpleMessage("لنبدأ بالأساسيات."),
     "stocksSectionDesc": MessageLookupByLibrary.simpleMessage(

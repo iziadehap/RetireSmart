@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:retiresmart/l10n/app_localizations.dart';
+import '../controller/goal_selection_controller.dart';
 import '../widgets/modern_menu_card.dart';
 
 class GoalSelectionPage extends StatelessWidget {
@@ -79,7 +80,96 @@ class GoalSelectionPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 40),
+
+                  // Recent Plan Section
+                  GetX<GoalSelectionController>(
+                    builder: (controller) {
+                      if (controller.recentCalculation.value == null) {
+                        return const SizedBox.shrink();
+                      }
+
+                      return FadeIn(
+                        delay: 300,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 30),
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color(0xFF00F5FF).withOpacity(0.1),
+                                Colors.transparent,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(
+                              color: const Color(0xFF00F5FF).withOpacity(0.2),
+                            ),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Get.toNamed(
+                                '/retirement',
+                                // The RetirementWizard will automatically pick up the session
+                                // as we saw in its checkSavedSession()
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: const Color(
+                                      0xFF00F5FF,
+                                    ).withOpacity(0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.history_rounded,
+                                    color: Color(0xFF00F5FF),
+                                    size: 24,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Recent Plan Found",
+                                        style: TextStyle(
+                                          color: Colors.white.withOpacity(0.5),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      const Text(
+                                        "Click to resume your retirement blueprint",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.white30,
+                                  size: 16,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+
+                  const SizedBox(height: 20),
 
                   // Menu Options
                   FadeIn(

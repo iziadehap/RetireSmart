@@ -99,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "We use this to calculate your gap.",
     ),
     "generatePlanButton": MessageLookupByLibrary.simpleMessage("GENERATE PLAN"),
+    "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
     "goldInvestment": MessageLookupByLibrary.simpleMessage("Gold Investment"),
     "goldInvestmentDesc": MessageLookupByLibrary.simpleMessage(
       "Track live market rates & manage portfolio",
@@ -137,6 +138,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "noCancel": MessageLookupByLibrary.simpleMessage("No, Cancel"),
     "offline": MessageLookupByLibrary.simpleMessage(
       "You are offline. Showing cached data.",
+    ),
+    "onboardingDesc1": MessageLookupByLibrary.simpleMessage(
+      "Take control of your retirement with AI-powered financial projections.",
+    ),
+    "onboardingDesc2": MessageLookupByLibrary.simpleMessage(
+      "Stay updated with live gold market rates and investment opportunities.",
+    ),
+    "onboardingDesc3": MessageLookupByLibrary.simpleMessage(
+      "Access all features in both Arabic and English tailored for your needs.",
+    ),
+    "onboardingTitle1": MessageLookupByLibrary.simpleMessage(
+      "Plan Your Future",
+    ),
+    "onboardingTitle2": MessageLookupByLibrary.simpleMessage(
+      "Track Gold Prices",
+    ),
+    "onboardingTitle3": MessageLookupByLibrary.simpleMessage(
+      "Localized Experience",
     ),
     "pleaseWaitLabel": MessageLookupByLibrary.simpleMessage(
       "Please wait moment...",
@@ -247,6 +266,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sharePlanSubject": MessageLookupByLibrary.simpleMessage(
       "My Retirement Plan",
     ),
+    "skip": MessageLookupByLibrary.simpleMessage("Skip"),
     "source": MessageLookupByLibrary.simpleMessage("Source"),
     "step1Title": MessageLookupByLibrary.simpleMessage(
       "Let\'s start with the basics.",

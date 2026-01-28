@@ -15,7 +15,15 @@ class SplashController extends GetxController {
   void _navigateToHome() async {
     // Wait for animations and initialization
     await Future.delayed(const Duration(seconds: 1));
-    Get.offAllNamed('/home');
+
+    final cache = CacheService();
+    bool? isOnboardingDone = await cache.getFromCash('is_onboarding_done');
+
+    if (isOnboardingDone == true) {
+      Get.offAllNamed('/home');
+    } else {
+      Get.offAllNamed('/onboarding');
+    }
   }
 
   Future<void> _getLanguage() async {

@@ -356,4 +356,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get setRiskLevelButton => 'تعيين مستوى المخاطرة';
+
+  @override
+  String get onboardingTitle1 => 'خطط لمستقبلك';
+
+  @override
+  String get onboardingDesc1 =>
+      'تحكم في تقاعدك مع توقعات مالية مدعومة بالذكاء الاصطناعي.';
+
+  @override
+  String get onboardingTitle2 => 'تتبع أسعار الذهب';
+
+  @override
+  String get onboardingDesc2 =>
+      'ابق على اطلاع بأسعار الذهب الحية وفرص الاستثمار المتاحة.';
+
+  @override
+  String get onboardingTitle3 => 'تجربة محلية بالكامل';
+
+  @override
+  String get onboardingDesc3 =>
+      'جميع الخصائص متاحة باللغتين العربية والإنجليزية لتناسب احتياجاتك.';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
+  String get skip => 'تخطي';
 }

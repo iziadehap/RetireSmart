@@ -1033,6 +1033,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Plan Your Future`
+  String get onboardingTitle1 {
+    return Intl.message(
+      'Plan Your Future',
+      name: 'onboardingTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take control of your retirement with AI-powered financial projections.`
+  String get onboardingDesc1 {
+    return Intl.message(
+      'Take control of your retirement with AI-powered financial projections.',
+      name: 'onboardingDesc1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track Gold Prices`
+  String get onboardingTitle2 {
+    return Intl.message(
+      'Track Gold Prices',
+      name: 'onboardingTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stay updated with live gold market rates and investment opportunities.`
+  String get onboardingDesc2 {
+    return Intl.message(
+      'Stay updated with live gold market rates and investment opportunities.',
+      name: 'onboardingDesc2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Localized Experience`
+  String get onboardingTitle3 {
+    return Intl.message(
+      'Localized Experience',
+      name: 'onboardingTitle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Access all features in both Arabic and English tailored for your needs.`
+  String get onboardingDesc3 {
+    return Intl.message(
+      'Access all features in both Arabic and English tailored for your needs.',
+      name: 'onboardingDesc3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get Started`
+  String get getStarted {
+    return Intl.message('Get Started', name: 'getStarted', desc: '', args: []);
+  }
+
+  /// `Skip`
+  String get skip {
+    return Intl.message('Skip', name: 'skip', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

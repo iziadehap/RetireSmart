@@ -365,4 +365,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setRiskLevelButton => 'SET RISK LEVEL';
+
+  @override
+  String get onboardingTitle1 => 'Plan Your Future';
+
+  @override
+  String get onboardingDesc1 =>
+      'Take control of your retirement with AI-powered financial projections.';
+
+  @override
+  String get onboardingTitle2 => 'Track Gold Prices';
+
+  @override
+  String get onboardingDesc2 =>
+      'Stay updated with live gold market rates and investment opportunities.';
+
+  @override
+  String get onboardingTitle3 => 'Localized Experience';
+
+  @override
+  String get onboardingDesc3 =>
+      'Access all features in both Arabic and English tailored for your needs.';
+
+  @override
+  String get getStarted => 'Get Started';
+
+  @override
+  String get skip => 'Skip';
 }
